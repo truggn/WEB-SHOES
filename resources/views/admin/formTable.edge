@@ -1,0 +1,135 @@
+@layout('layouts/admin/index')
+@section('content')
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Forms</a></li>
+                            <li class="active">Basic</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Form Thêm Sản Phẩm </strong>
+                    </div>
+                    <div class="card-body card-block">
+                        <form name="form-group" action="{{ route('productsController.themSanPham') }}" enctype="multipart/form-data"  method="POST" class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="tensanpham" class=" form-control-label">Tên:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="tensanpham" name="tensanpham" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="giaban-input" class=" form-control-label">Giá:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="giaban-input" name="giaban" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="size-input" class=" form-control-label">Size:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="size-input" name="size"class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="selectSm" class=" form-control-label">Loại: </label></div>
+                                <div class="col-12 col-md-9">
+                                    <select name="id_lsp" id="selectSm" class="form-control-sm form-control">
+                                        <option value="">Please select</option>
+                                        <option value="1">Adidas</option>
+                                        <option value="2">Nike</option>
+                                        <option value="3">Van</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="selectSm" class=" form-control-label">Đối tượng:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <select name="id_doituong" id="selectSm" class="form-control-sm form-control">
+                                        <option value="">Please select</option>
+                                        <option value="1">Nam giới</option>
+                                        <option value="2">Trẻ em</option>
+                                        <option value="3">Phụ nữ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="file-multiple-input" class=" form-control-label">Ảnh:</label></div>
+                                <div class="col-12 col-md-9"><input type="file" id="file-input" name="hinhanh" class="form-control-file"></div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                     Thêm
+                                </button>
+                                <button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                  
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Form thêm loại sản phẩm</strong>
+                    </div>
+                    <div class="card-body card-block">
+                        <form action="#" method="post" class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="tenloai-text" class=" form-control-label">Tên:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="tenloai-text" name="tenloai" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="mota-input" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Thêm
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    
+<div class="clearfix"></div>
+@endsection

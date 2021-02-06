@@ -1,0 +1,203 @@
+@layout('layouts/admin/index')
+@section('css')
+    	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../../admin/vendors/styles/core.css">
+	<link rel="stylesheet" type="text/css" href="../../admin/vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="../../admin/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="../../admin/src/plugins/datatables/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="../../admin/vendors/styles/style.css">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+@endsection
+@section('content')
+<div class="mobile-menu-overlay"></div>
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Basic Tables</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/page-admin">Home</a></li>
+                                <li class="breadcrumb-item active">Danh mục</li>
+                                <li class="breadcrumb-item active" aria-current="page">Đối tượng</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div class="dropdown">
+                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                January 2018
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Export List</a>
+                                <a class="dropdown-item" href="#">Policies</a>
+                                <a class="dropdown-item" href="#">View Assets</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- basic table  Start -->
+            <div class="pd-20 card-box mb-30">
+                <div class="clearfix mb-20">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4">Đối tượng khách hàng</h4> 
+                    </div>
+                    <div class="pull-right">
+                        <a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#Medium-modalThem" data-toggle="collapse" role="button"><i class="fa fa-plus"></i>Thêm loại khách hàng</a>
+                    </div>
+                </div>
+                <!-- //////////////////////////////////////// MODAL ////////////////////////--->
+                            <!-- MODAL THEM LOẠI SAN PHAM -->
+                            <div class="modal fade" id="Medium-modalThem" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myLargeModalLabel">Điền thông tin</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" name="form-group">
+                                                <div class="form-group">
+                                                    <label for="uname">Tên loại khách hàng:</label>
+                                                    <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" name="doituong" required>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
+                                                    <div class="col-12 col-md-9">
+                                                        <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                    <button type="button" class="btn btn-primary" name="btnXacNhanThem">Xác nhận</button>
+                                                </div>
+                                            </form>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+
+<!-- MODAL CẬP NHẬT LOẠI SẢN PHẨM-->
+@each(dt in dataDT)
+<div class="modal fade" id="id{{dt.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Cập nhật thông tin</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="" name="form-group">
+                    <div class="form-group">
+                        <label for="uname">Id:</label>
+                        <span class="form-control">{{dt.id}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="uname">Tên loại khách hàng:</label>
+                        <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" value="{{dt.doituong}}" name="doituong" required>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-primary" name="btnXacNhanThem">Xác nhận</button>
+                    </div>
+                </form>
+            </div> 
+        </div>
+    </div>
+</div>
+
+@endeach
+
+<!-- MODAL XÓA LOẠI SẢN PHẨM -->
+<div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-warning">
+            <div class="modal-body text-center">
+                <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
+                <p>Bạn có muốn xóa loại khách hàng này?</p>
+                <button type="button" class="btn btn-dark" id="btnOk">Ok</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+                <!--//////////////////////////////////////////END MODAL //////////////////////-->
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Loại khách hàng</th>
+                            <th scope="col">Mô tả</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @each(dt in dataDT)
+                          
+                        <tr>
+                            <th scope="row">{{dt.id}}</th>
+                            <td>{{dt.doituong}}</td>
+                            <td>{{dt.mota}}</td>
+                            <td>{{dt.trangthai}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                        <i class="dw dw-more"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">     
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#id{{dt.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        @endeach
+
+                    </tbody>
+                </table>             
+                <div class="collapse collapse-box" id="basic-table" >
+                </div>
+            </div>     
+            <!-- basic table  End -->
+        </div>
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+        </div>
+    </div>
+</div>
+
+@endsection
+@section('script')
+    	<!-- js -->
+	<script src="../../admin/vendors/scripts/core.js"></script>
+	<script src="../../admin/vendors/scripts/script.min.js"></script>
+	<script src="../../admin/vendors/scripts/process.js"></script>
+	<script src="../../admin/vendors/scripts/layout-settings.js"></script>
+	<script src="../../admin/src/plugins/apexcharts/apexcharts.min.js"></script>
+	<script src="../../admin/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="../../admin/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="../../admin/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+	<script src="../../admin/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+	<script src="../../admin/vendors/scripts/dashboard.js"></script>
+@endsection
