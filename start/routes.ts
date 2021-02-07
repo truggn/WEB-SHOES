@@ -36,14 +36,13 @@ Route.post('/forget-password', 'homeController.postForgetPass')
 Route.group(() => {
     Route.get('/logout', 'homeController.logout')
     Route.get('/home', 'homeController.index')
-    Route.get('/chi-tiet-san-pham', 'productController.chitietsanpham')
     Route.get('/cart', 'billsController.viewHoaDon')
 })
 
 // ROUTER PRODUCT
 Route.group(() => {
     Route.get('/san-pham', 'productsController.viewHomeSanPham')
-    // Route.get('/san-pham/:id', 'productsController.dataSPTheoLSP')
+    Route.get('/san-pham/:id', 'productsController.viewChiTietSP')
     Route.post('/product/them-san-pham', 'productsController.themSanPham')
 
     // ROUTER DANH MỤC
@@ -86,4 +85,5 @@ Route.group(() => {
 Route.post('/cart', 'BillsController.addToCart')
 
 Route.resource('/page-admin/loai-san-pham', 'LoaiSanPhamsController')
+
 

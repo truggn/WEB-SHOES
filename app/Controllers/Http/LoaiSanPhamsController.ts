@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class LoaiSanPhamsController {
   public async index({ }: HttpContextContract) {
-    
+
   }
 
   public async create({ }: HttpContextContract) {
@@ -10,17 +10,24 @@ export default class LoaiSanPhamsController {
   }
 
   public async store({ }: HttpContextContract) {
+
   }
 
+
   public async show({ }: HttpContextContract) {
+
   }
 
   public async edit({ }: HttpContextContract) {
+
   }
 
   public async update({ }: HttpContextContract) {
+
   }
 
   public async destroy({ }: HttpContextContract) {
+
   }
+
 }

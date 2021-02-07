@@ -21,7 +21,7 @@
 <div class="main-container">
     <div class="pd-ltr-20">
         <div class="row">
-            <div class="col-xl-3 mb-30">
+            <div class="col-xl-3 mb-20">
                 <div class="card-box height-100-p widget-style1">
                     <div class="d-flex flex-wrap align-items-center">
                         <div class="progress-data">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 mb-30">
+            <div class="col-xl-3 mb-20">
                 <div class="card-box height-100-p widget-style1">
                     <div class="d-flex flex-wrap align-items-center">
                         <div class="progress-data">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 mb-30">
+            <div class="col-xl-3 mb-20">
                 <div class="card-box height-100-p widget-style1">
                     <div class="d-flex flex-wrap align-items-center">
                         <div class="progress-data">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 mb-30">
+            <div class="col-xl-3 mb-20">
                 <div class="card-box height-100-p widget-style1">
                     <div class="d-flex flex-wrap align-items-center">
                         <div class="progress-data">
@@ -74,13 +74,22 @@
                 </div>
             </div>
         </div>
-        <div class="card-box mb-30">
-            <div class="clearfix mb-20">
+        <div class="card-box mb-10">
+            <div class="clearfix mb-5">
                 <div class="pull-left">
-                    <h2 class="h4 pd-20">Danh sách sản phẩm</h2>
+                    <h2 class="h4 pd-10">Danh sách sản phẩm</h2>
+                    <div class="h6 ml-3">Lọc theo:
+                        <select name="" id="">
+                            <option value="0">Tất cả</option>
+                            @each(lsp in dataLoaiSP)
+                           <a href="#"><option  value="{{lsp.id}}">{{lsp.tenloai}}</option></a> 
+                            @endeach
+                            
+                        </select>
+                    </div>
                 </div>
-                <div class="pull-right">
-                    <button class="btn btn-primary" style="mr-3 mt-3" data-toggle="modal" data-target="#bd-example-modal-lg" >Thêm mới</button>
+                <div class="pull-right" style="margin-top:5px, margin-right:3px">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#bd-example-modal-lg" >Thêm mới</button>
                 </div>
             </div>
             
@@ -118,8 +127,14 @@
                     
                                             <div class="row form-group">
                                                 <div class="col col-md-3"><label for="file-multiple-input" class=" form-control-label">Ảnh:</label></div>
-                                                <div class="col-12 col-md-9"><input type="file" id="file-input" name="hinhanh" class="form-control-file"></div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="file" id="file-input" name="hinhanh" class="form-control-file">
+                                                    {{--  @if(flashMessages.has('errors.hinhanh'))
+                                                        {{ flashMessages.get('errors.hinhanh') }}
+                                                     @endif  --}}
+                                                </div>
                                             </div>
+
                                             <div class="row form-group">
                                                 <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
                                                 <div class="col-12 col-md-9">
@@ -164,8 +179,6 @@
                     </div>
                 </div>
             </div>
-
-
               <!--Modal Update -->
             @each(sanpham in datasanpham)
             <div class="modal fade bs-example-modal-lg" id="id{{sanpham.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -276,11 +289,10 @@
                 </thead>
                 <tbody>
 
-                    @each(sanpham in datasanpham)
-                      
+                    @each(sanpham in datasanpham) 
                     <tr>
                         <td class="table-plus">
-                            <img src="{{sanpham.hinhanh}}" width="70" height="70" alt="">
+                            <img src="../uploads/{{sanpham.hinhanh}}" width="70" height="70" alt="{{sanpham.tensanpham}}">
                         </td>
                         <td>
                             <h5 class="font-16">{{sanpham.tensanpham}}</h5>
@@ -308,6 +320,27 @@
                     @endeach
                 </tbody>
             </table>
+        </div>
+        <div class="" style="margin-bottom:5px">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
         </div>
         <div class="footer-wrap pd-20 mb-20 card-box">
             DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>

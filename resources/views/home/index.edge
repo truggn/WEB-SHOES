@@ -115,10 +115,10 @@
 					<!----special-products-grids---->
 					<div class="special-products-grids">
 						@each(sanpham in datasanpham)
-						<form action="/add-to-cart">
+						<form action="#">
 							<div class="col-md-3 special-products-grid text-center">
-								<a class="brand-name" href="/chi-tiet-san-pham"><img src="images/b1.jpg" title="name" /></a>
-								<a class="product-here" href="/chi-tiet-san-pham"><img src="images/p1.jpg" title="product-name" /></a>
+								<a class="brand-name" href="/chi-tiet-san-pham"><img src="../uploads/logo/{{sanpham.loaisanpham.logo}}" title="#" /></a>
+								<a class="product-here" href="/san-pham/{{sanpham.id}}"><img src="../uploads/{{sanpham.hinhanh}}" title="product-name" /></a>
 								<h4><a href="single-page.html">{{sanpham.tensanpham}}</a></h4>
 								<a class="product-btn" href="single-page.html"><span>{{sanpham.giaban}}$</span><small>Mua Ngay</small><label> </label></a>
 							</div>

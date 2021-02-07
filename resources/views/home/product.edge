@@ -98,10 +98,10 @@
             <!--/// load data theo id tại đây-->
             @each(sp in listDataSP) 
             <div class="col-md-3 special-products-grid text-center">
-                <a class="brand-name" href="/cart"><img src="images/b1.jpg" title="Nike" /></a>
-                <a class="product-here" href="/cart"><img src="images/p1.jpg" title="Click để xem chi tiết" /></a>
-                <h4><a href="/cart">{{sp.tensanpham}}</a></h4>
-                <a class="product-btn" href="#"><span>109.90$</span><small>ODER NOW</small><label> </label></a>
+                <a class="brand-name"><img src="../uploads/logo/{{sp.loaisanpham.logo}}" title="{{sp.loaisanpham.tenloai}}" /></a>
+                <a class="product-here" href="/san-pham/{{sp.id}}"><img src="../uploads/{{sp.hinhanh}}" title="Click để xem chi tiết" /></a>
+                <h4><a href="/san-pham/{{sp.id}}">{{sp.tensanpham}}</a></h4>
+                <a class="product-btn" href="/cart"><span>{{sp.giaban}}$</span><small>ODER NOW</small><label> </label></a>
             </div>
             @endeach   
         </div>

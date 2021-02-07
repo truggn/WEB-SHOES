@@ -8,21 +8,24 @@ import Application from '@ioc:Adonis/Core/Application'
 export default class ProductsController {
 
     public async viewHomeSanPham({ view, response, request, params }: HttpContextContract) {
-
         const dataLoaiSP = await Loaisanpham.query().select('*').from('loaisanphams')
         const idlsp = request.input("id", dataLoaiSP[0].id)
         const listDataSP = await Sanpham.query().select('*').from('sanphams').where('id_lsp', idlsp).preload('loaisanpham').preload('doituong')
         return view.render('home/product', { dataLoaiSP, listDataSP })
-        // return listDataSP
+
     }
 
     // VIEW TABLE PRODUCT CHUA XOA
     public async viewSanPham({ view, response, request }: HttpContextContract) {
         const page = request.input('page', 1)
         const limit = 5
+
+        const dataLoaiSP = await Loaisanpham.all()
+
         const datasanpham = await Sanpham.query().select('*').from('sanphams').where('trangthai', 1)
             .preload('doituong').preload('loaisanpham').paginate(page, limit)
-        const dataLoaiSP = await Loaisanpham.all()
+
+
         const dataDT = await Doituong.all()
         return view.render('admin/danhSachSanPham', { datasanpham, dataLoaiSP, dataDT })
     }
@@ -42,15 +45,17 @@ export default class ProductsController {
     }
 
     // POST THEM SAN PHAM
-    public async themSanPham({ view, response, request }: HttpContextContract) {
+    public async themSanPham({ view, response, request, session }: HttpContextContract) {
         try {
-            const hinhanh = request.file('hinhanh')
+            const hinhanh = request.file('hinhanh', {
+                size: '1mb',
+                extnames: ['jpg, png, jpeg']
+            })
             const name = `${new Date().getTime()}.${hinhanh?.extname}`
             if (!hinhanh) {
                 return 'Please upload file'
             }
-
-            await hinhanh.move(Application.tmpPath('uploads'), {
+            await hinhanh.move(Application.publicPath('uploads'), {
                 name: name,
             })
 
@@ -68,17 +73,24 @@ export default class ProductsController {
 
                 await sanpham.related('doituong').associate(doituong)
 
+                session.flash({ success: 'Thêm sản phẩm thành công' });
                 return response.redirect('/page-admin/quan-ly-san-pham')
             }
         } catch (error) {
-            return response.json(error)
+            session.flash({ success: 'Thêm sản phẩm thất bại' });
+            return response.redirect('back')
         }
     }
 
     // VIEW CHI TIET SAN PHAM
-    public async chitietsanpham({ view, response, request }: HttpContextContract) {
-        return view.render('home/chitietsanpham')
+    public async viewChiTietSP({ view, response, request, params }: HttpContextContract) {
+
+        const id = params.id
+        const dataSPbyID = await Sanpham.query().select('*').from('sanphams').where('id', id).preload('loaisanpham').preload('doituong')
+
+        return view.render('home/chitietsanpham', { dataSPbyID })
     }
+
 
     // POST THEM LOẠI SẢN PHẨM
     public async themLoaiSanPham({ view, response, request }: HttpContextContract) {
@@ -91,7 +103,7 @@ export default class ProductsController {
         if (!logo) {
             return 'Please upload file'
         }
-        await logo.move(Application.tmpPath('uploads/logo'), {
+        await logo.move(Application.publicPath('uploads/logo'), {
             name: name,
         })
         newLoaiSanPham.logo = name
@@ -165,8 +177,7 @@ export default class ProductsController {
             if (!hinhanh) {
                 return 'Please upload file'
             }
-
-            await hinhanh.move(Application.tmpPath('uploads'), {
+            await hinhanh.move(Application.publicPath('uploads'), {
                 name: name,
             })
             const data = request.only(['tensanpham', 'hinhanh', 'size', 'giaban', 'color', 'trangthai', 'mota', 'id_lsp', 'id_doituong'])
