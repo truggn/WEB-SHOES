@@ -71,7 +71,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="/product/them-loai-product" name="form-group" enctype="multipart/form-data"  method="POST">
+                                            <form action="{{route ('admin_loai_san_pham.store')}}" name="form-group" enctype="multipart/form-data"  method="POST">
                                                 <div class="form-group">
                                                     <label for="uname">Tên loại sản phẩm:</label>
                                                     <input type="text" class="form-control" id="tenloaisanpham" placeholder="Nhập tên loại sản phẩm" name="tenloai" required>
@@ -105,7 +105,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <form action="/page-admin/san-pham/updatelsp/{{lsp.id}}?_method=PUT" name="form-group-update" enctype="multipart/form-data" method="POST">
+                <form action="/admin/loai-san-pham/updatelsp/{{lsp.id}}?_method=PUT" name="form-group-update" enctype="multipart/form-data" method="POST">
                     <div class="form-group">
                         <label for="uname">Id:</label>
                         <span class="form-control">{{lsp.id}}</span>
@@ -150,6 +150,21 @@
 </div>
                 <!--//////////////////////////////////////////END MODAL //////////////////////-->
 
+                <!-- MODAL REVERT LOẠI SẢN PHẨM -->
+<div class="modal fade" id="revert-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-warning">
+            <div class="modal-body text-center">
+                <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
+                <p>Bạn có muốn kinh doanh lại loại sản phẩm này?</p>
+                <button type="button" class="btn btn-dark" id="btnRevertLSP">Ok</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+                <!--//////////////////////////////////////////END MODAL //////////////////////-->
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -169,16 +184,29 @@
                             <td>{{lsp.tenloai}}</td>
                             <td><img src="../uploads/logo/{{lsp.logo}}" alt=""></td>
                             <td>{{lsp.mota}}</td>
-                            <td>{{lsp.trangthai}}</td>
+                            <td>
+                                @if(lsp.trangthai == 1)
+                                <p>Đang bán</p>
+                            @else
+                                <p>Ngừng bán</p>
+                            @endif
+                        </td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                         <i class="dw dw-more"></i>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">     
+                                    
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">  
+                                        @if(lsp.trangthai == 1)
                                         <a class="dropdown-item" data-toggle="modal" data-id="{{lsp.id}}" data-target="#id{{lsp.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
                                         <a class="dropdown-item" data-toggle="modal" data-id="{{lsp.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                    </div>
+                                        @else
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{lsp.id}}" data-target="#revert-modal" href="#"><i class="dw dw-delete-3"></i> Phục hồi</a>
+                                         @endif
+                                </div>
+                                    
+                                   
                                 </div>
                             </td>
                         </tr>
@@ -188,7 +216,10 @@
                 </table>   
                 <div>
                     <form name="delete-product-form" method="POST"></form>
-                </div>          
+                </div>
+                <div>
+                    <form name="revert-product-form" method="POST"></form>
+                </div>        
                 <div class="collapse collapse-box" id="basic-table" >
                 </div>
             </div>     
@@ -203,17 +234,29 @@
     document.addEventListener('DOMContentLoaded', function(){
         var id; 
         var formDelete = document.forms['delete-product-form']
+        var formRevert = document.forms['revert-product-form']
         var btnDelete = document.getElementById('btnDeleteLSP')
+        var btnRevert = document.getElementById('btnRevertLSP')
         
           // UPDATE 
           $('#warning-modal').on('show.bs.modal', function(event){
                 var button =  $(event.relatedTarget);
                 id = button.data('id');
-                console.log("id update la:",id)
+                
             })
             btnDelete.onclick = () =>{
-                formDelete.action='/page-admin/san-pham/deletelsp/' + id + '?_method=PUT'
+                formDelete.action='/admin/loai-san-pham/deletelsp/' + id + '?_method=PUT'
                 formDelete.submit()
+            }
+            // REVERT
+            $('#revert-modal').on('show.bs.modal', function(event){
+                var button =  $(event.relatedTarget);
+                id = button.data('id');
+                
+            })
+            btnRevert.onclick = () =>{
+                formRevert.action ='/admin/loai-san-pham/revertlsp/' + id + '?_method=PUT'
+                formRevert.submit()
             }
     })
 </script>

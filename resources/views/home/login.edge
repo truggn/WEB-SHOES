@@ -19,7 +19,7 @@
                           <h1>Login</h1>
                        </div>
                     </div>
-                          <form name="group" action="{{ route('homeController.postlogin') }}" method="post">
+                          <form name="group" action="{{ route('LoginPageAdminsController.store') }}" method="post">
                           <div class="form-group">
                              <label for="exampleInputEmail1">Email address:</label>
                              <input type="email" name="email" class="form-control" value="{{ flashMessages.get('email') || '' }}" id="email" aria-describedby="emailHelp"

@@ -77,7 +77,7 @@ const authConfig: AuthConfig = {
         | that time.
         |
         */
-        model: () => import('App/Models/user'),
+        model: () => import('App/Models/Users'),
       },
     },
     /*
@@ -160,7 +160,7 @@ const authConfig: AuthConfig = {
         | that time.
         |
         */
-        model: () => import('App/Models/user'),
+        model: () => import('App/Models/Users'),
       },
     },
     /*
@@ -223,7 +223,7 @@ const authConfig: AuthConfig = {
         | that time.
         |
         */
-        model: () => import('App/Models/user'),
+        model: () => import('App/Models/Users'),
       },
     },
   },

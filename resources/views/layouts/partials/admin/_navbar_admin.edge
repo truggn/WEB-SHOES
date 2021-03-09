@@ -114,7 +114,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                    <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#Medium-modalUpdate" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
                     <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
                     <a class="dropdown-item" href="/logout"><i class="dw dw-logout"></i> Log Out</a>
                 </div>
@@ -218,9 +218,10 @@
                         <span class="micon dw dw-house-1"></span><span class="mtext">Hệ thống</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="/page-admin/san-pham">Quản lý sản phẩm</a></li>
+                        <li><a href="{{route ('admin_san_pham.index')}}">Quản lý sản phẩm</a></li>
                         <li><a href="/page-admin/hoa-don">Quản lý hóa đơn</a></li>
-                        <li><a href="#">Quản lý nhà cung ứng</a></li>
+                        <li><a href="{{route ('admin_quan_ly_nha_cung_cap.index')}}">Quản lý nhà cung ứng</a></li>
+                        <li><a href="{{route ('admin_quan_ly_nhap_hang.index')}}">Quản lý nhập hàng</a></li>
                         <li><a href="#">Quản lý kho</a></li>
                         <li><a href="/page-admin/san-pham/khong-ban">Ngừng kinh doanh</a></li>
                     </ul>
@@ -230,8 +231,8 @@
                         <span class="micon dw dw-library"></span><span class="mtext">Danh mục</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="/danh-muc/loai-san-pham">Loại sản phẩm</a></li>
-                        <li><a href="/danh-muc/doi-tuong">Đối tượng</a></li>
+                        <li><a href="{{route ('admin_loai_san_pham.index')}}">Loại sản phẩm</a></li>
+                        <li><a href="{{route ('admin_khach_hang.index')}}">Đối tượng</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -281,3 +282,32 @@
     </div>
 </div>
 <div class="mobile-menu-overlay"></div>
+<!-- MODAL CẬP NHẬT THÔNG TIN  -->
+                 <!-- MODAL THEM LOẠI SAN PHAM -->
+                 <div class="modal fade" id="Medium-modalUpdate" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">Cập nhật thông tin cá nhân.</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/product/them-loai-product" name="form-group" enctype="multipart/form-data"  method="POST">
+                                    <div class="form-group">
+                                        <label for="uname">Email:</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Điền Email!" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uname">Password:</label>
+                                        <input type="password" class="form-control" id="password" placeholder="Điền Password!" name="password" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-primary" name="btnUpdateUser">Xác nhận</button>
+                                    </div>
+                                </form>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <!--//////////////////////////////////////////END MODAL //////////////////////-->

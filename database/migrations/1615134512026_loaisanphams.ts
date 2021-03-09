@@ -1,19 +1,20 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Doituongs extends BaseSchema {
-  protected tableName = 'doituongs'
+export default class Loaisanphams extends BaseSchema {
+  protected tableName = 'loaisanphams'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
-      table.string('doituong').notNullable()
+      table.string('tenloai').notNullable()
       table.string('mota')
+      table.string('logo').notNullable()
       table.boolean('trangthai').defaultTo(1)
       table.timestamps(true)
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }

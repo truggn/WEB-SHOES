@@ -1,6 +1,6 @@
 
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Doituong from 'App/Models/Doituong'
+import Khachhang from 'App/Models/Khachhang'
 import Loaisanpham from 'App/Models/Loaisanpham'
 import Sanpham from 'App/Models/Sanpham'
 import Application from '@ioc:Adonis/Core/Application'
@@ -10,30 +10,16 @@ export default class ProductsController {
     public async viewHomeSanPham({ view, response, request, params }: HttpContextContract) {
         const dataLoaiSP = await Loaisanpham.query().select('*').from('loaisanphams')
         const idlsp = request.input("id", dataLoaiSP[0].id)
-        const listDataSP = await Sanpham.query().select('*').from('sanphams').where('id_lsp', idlsp).preload('loaisanpham').preload('doituong')
+        const listDataSP = await Sanpham.query().select('*').from('sanphams').where('id_lsp', idlsp).preload('loaisanpham').preload('khachhang')
         return view.render('home/product', { dataLoaiSP, listDataSP })
 
     }
 
-    // VIEW TABLE PRODUCT CHUA XOA
-    public async viewSanPham({ view, response, request }: HttpContextContract) {
-        const page = request.input('page', 1)
-        const limit = 5
-
-        const dataLoaiSP = await Loaisanpham.all()
-
-        const datasanpham = await Sanpham.query().select('*').from('sanphams').where('trangthai', 1)
-            .preload('doituong').preload('loaisanpham').paginate(page, limit)
-
-
-        const dataDT = await Doituong.all()
-        return view.render('admin/danhSachSanPham', { datasanpham, dataLoaiSP, dataDT })
-    }
 
     // VIEW TABLE PRODUCT DA XOA
     public async viewTableDestroy({ view, response, request }: HttpContextContract) {
         const datasanpham = await Sanpham.query().select('*').from('sanphams').where('trangthai', 0)
-            .preload('doituong').preload('loaisanpham')
+            .preload('khachhang').preload('loaisanpham')
 
         return view.render('admin/viewTableDestroy', { datasanpham })
     }
@@ -44,98 +30,74 @@ export default class ProductsController {
         return view.render('admin/formTable')
     }
 
-    // POST THEM SAN PHAM
-    public async themSanPham({ view, response, request, session }: HttpContextContract) {
-        try {
-            const hinhanh = request.file('hinhanh', {
-                size: '1mb',
-                extnames: ['jpg, png, jpeg']
-            })
-            const name = `${new Date().getTime()}.${hinhanh?.extname}`
-            if (!hinhanh) {
-                return 'Please upload file'
-            }
-            await hinhanh.move(Application.publicPath('uploads'), {
-                name: name,
-            })
+    // // POST THEM SAN PHAM
+    // public async themSanPham({ view, response, request, session }: HttpContextContract) {
+    //     try {
+    //         const hinhanh = request.file('hinhanh', {
+    //             size: '1mb',
+    //             extnames: ['jpg, png, jpeg']
+    //         })
+    //         const name = `${new Date().getTime()}.${hinhanh?.extname}`
+    //         if (!hinhanh) {
+    //             return 'Please upload file'
+    //         }
+    //         await hinhanh.move(Application.publicPath('uploads'), {
+    //             name: name,
+    //         })
 
-            const data = request.only(['tensanpham', 'hinhanh', 'size', 'giaban', 'color', 'trangthai', 'mota', 'id_lsp', 'id_doituong'])
-            data.hinhanh = name
-            const sanpham = await Sanpham.create(data);
-            const loaisp = await Loaisanpham.find('id_lsp', data.id_lsp)
+    //         const data = request.only(['tensanpham', 'hinhanh', 'size', 'giaban', 'color', 'trangthai', 'mota', 'id_lsp', 'id_doituong'])
+    //         data.hinhanh = name
+    //         const sanpham = await Sanpham.create(data);
+    //         const loaisp = await Loaisanpham.find('id_lsp', data.id_lsp)
 
-            const doituong = await Doituong.find('id_doituong', data.id_doituong)
+    //         const doituong = await Doituong.find('id_doituong', data.id_doituong)
 
-            if (loaisp == null || doituong == null) {
-                return response.redirect('back')
-            } else {
-                await sanpham.related('loaisanpham').associate(loaisp);
+    //         if (loaisp == null || doituong == null) {
+    //             return response.redirect('back')
+    //         } else {
+    //             await sanpham.related('loaisanpham').associate(loaisp);
 
-                await sanpham.related('doituong').associate(doituong)
+    //             await sanpham.related('doituong').associate(doituong)
 
-                session.flash({ success: 'Thêm sản phẩm thành công' });
-                return response.redirect('/page-admin/quan-ly-san-pham')
-            }
-        } catch (error) {
-            session.flash({ success: 'Thêm sản phẩm thất bại' });
-            return response.redirect('back')
-        }
-    }
+    //             session.flash({ success: 'Thêm sản phẩm thành công' });
+    //             return response.redirect('/page-admin/quan-ly-san-pham')
+    //         }
+    //     } catch (error) {
+    //         session.flash({ success: 'Thêm sản phẩm thất bại' });
+    //         return response.redirect('back')
+    //     }
+    // }
 
     // VIEW CHI TIET SAN PHAM
     public async viewChiTietSP({ view, response, request, params }: HttpContextContract) {
 
         const id = params.id
-        const dataSPbyID = await Sanpham.query().select('*').from('sanphams').where('id', id).preload('loaisanpham').preload('doituong')
+        const dataSPbyID = await Sanpham.query().select('*').from('sanphams').where('id', id).preload('loaisanpham').preload('khachhang')
 
         return view.render('home/chitietsanpham', { dataSPbyID })
     }
 
 
     // POST THEM LOẠI SẢN PHẨM
-    public async themLoaiSanPham({ view, response, request }: HttpContextContract) {
-        const newLoaiSanPham = new Loaisanpham()
-        newLoaiSanPham.tenloai = request.input('tenloai')
-        newLoaiSanPham.mota = request.input('mota')
+    // public async themLoaiSanPham({ view, response, request }: HttpContextContract) {
+    //     const newLoaiSanPham = new Loaisanpham()
+    //     newLoaiSanPham.tenloai = request.input('tenloai')
+    //     newLoaiSanPham.mota = request.input('mota')
 
-        const logo = request.file('logo')
-        const name = `${new Date().getTime()}.${logo?.extname}`
-        if (!logo) {
-            return 'Please upload file'
-        }
-        await logo.move(Application.publicPath('uploads/logo'), {
-            name: name,
-        })
-        newLoaiSanPham.logo = name
+    //     const logo = request.file('logo')
+    //     const name = `${new Date().getTime()}.${logo?.extname}`
+    //     if (!logo) {
+    //         return 'Please upload file'
+    //     }
+    //     await logo.move(Application.publicPath('uploads/logo'), {
+    //         name: name,
+    //     })
+    //     newLoaiSanPham.logo = name
 
-        await newLoaiSanPham.save()
-        return response.redirect('back')
-    }
-    //GET VIEW LOẠI SẢN PHẨM
-    public async viewLoaiSanPham({ view, response, request }: HttpContextContract) {
-        const dataLSP = await Loaisanpham.query().select('*').from('loaisanphams')
-        return view.render('admin/danhMucLoaiSP', { dataLSP })
-    }
+    //     await newLoaiSanPham.save()
+    //     return response.redirect('back')
+    // }
 
-    // GET VIEW ĐỐI TƯỢNG
-    public async viewDoiTuong({ view, response, request }: HttpContextContract) {
-        try {
-            const dataDT = await Doituong.query().select('*').from('doituongs')
-            return view.render('admin/danhMucDoiTuong', { dataDT })
-        } catch (error) {
-
-        }
-    }
-
-    // POST THEM LOAI NGUOI MUA
-    public async themloainguoimua({ view, response, request }: HttpContextContract) {
-        const newDoiTuong = new Doituong()
-        newDoiTuong.doituong = request.input('doituong')
-        newDoiTuong.mota = request.input('mota')
-        newDoiTuong.trangthai = request.input('trangthai')
-        await newDoiTuong.save()
-        return console.log(newDoiTuong)
-    }
     // DELETE LOAI SAN PHAM
     public async deleteLoaiSanPham({ view, response, request, params }: HttpContextContract) {
         try {
@@ -204,30 +166,30 @@ export default class ProductsController {
 
     }
     // UPDATE LOAI SAN PHAM
-    public async updateLoaiSanPham({ view, response, request, params }: HttpContextContract) {
-        try {
-            const logo = request.file('logo')
-            const name = `${new Date().getTime()}.${logo?.extname}`
-            if (!logo) {
-                return 'Please upload file'
-            }
-            await logo.move(Application.tmpPath('uploads/logo'), {
-                name: name,
-            })
-            const data = request.only(['tenloai', 'mota', 'logo'])
-            data.logo = name
-            const id = params.id
-            await Loaisanpham.query().where('id', id).update({
-                tenloai: data.tenloai,
-                mota: data.mota,
-                logo: name
-            })
-            return response.redirect('back')
+    // public async updateLoaiSanPham({ view, response, request, params }: HttpContextContract) {
+    //     try {
+    //         const logo = request.file('logo')
+    //         const name = `${new Date().getTime()}.${logo?.extname}`
+    //         if (!logo) {
+    //             return 'Please upload file'
+    //         }
+    //         await logo.move(Application.tmpPath('uploads/logo'), {
+    //             name: name,
+    //         })
+    //         const data = request.only(['tenloai', 'mota', 'logo'])
+    //         data.logo = name
+    //         const id = params.id
+    //         await Loaisanpham.query().where('id', id).update({
+    //             tenloai: data.tenloai,
+    //             mota: data.mota,
+    //             logo: name
+    //         })
+    //         return response.redirect('back')
 
-        } catch (error) {
-            return response.json('Update lsp that bai')
-        }
-    }
+    //     } catch (error) {
+    //         return response.json('Update lsp that bai')
+    //     }
+    // }
     // GET LISTDATA ADIDAS
     public async dataSPTheoLSP({ view, response, request, params }: HttpContextContract) {
         try {

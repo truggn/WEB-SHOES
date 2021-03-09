@@ -1,19 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Role from './Role'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class ManagerPage extends BaseModel {
+export default class Khachhang extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @hasOne(() => Role)
-  public role: HasOne<typeof Role>
+  @column()
+  public doituong: string
 
   @column()
-  public roleid: number
+  public mota: string
 
   @column()
-  public quanly: string
+  public trangthai: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

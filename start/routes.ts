@@ -20,15 +20,17 @@
 
 import { Router } from '@adonisjs/core/build/standalone'
 import Route from '@ioc:Adonis/Core/Route'
+import DoiTuongsController from 'App/Controllers/Http/DoiTuongsController'
 import HomeController from 'App/Controllers/Http/HomeController'
+import SanPhamsController from 'App/Controllers/Http/SanPhamsController'
+import ThongKesController from 'App/Controllers/Http/ThongKesController'
+import UsersController from 'App/Controllers/Http/UsersController'
 
 Route.group(() => {
     Route.get('/register', 'homeController.viewregister')
     Route.post('/register', 'homeController.postregister')
 
 })
-Route.get('/login', 'homeController.viewlogin')
-Route.post('/login', 'homeController.postlogin')
 Route.get('/forget-password', 'homeController.viewforgetPass')
 Route.post('/forget-password', 'homeController.postForgetPass')
 
@@ -45,45 +47,83 @@ Route.group(() => {
     Route.get('/san-pham/:id', 'productsController.viewChiTietSP')
     Route.post('/product/them-san-pham', 'productsController.themSanPham')
 
-    // ROUTER DANH MỤC
-    Route.get('/danh-muc/loai-san-pham', 'productsController.viewLoaiSanPham')
-    Route.post('/product/them-loai-product', 'productsController.themLoaiSanPham')
-    Route.get('/danh-muc/doi-tuong', 'productsController.viewDoiTuong')
-
-    // ROUTER SAN PHAM THEO DOI TUONG
-    Route.post('/product/them-loai-nguoi-mua', 'productsController.themloainguoimua')
-
 
 })
 
 // ROUTER ADMIN
 Route.group(() => {
 
-    Route.get('page-admin/login-page-admin', 'AdminsController.viewloginPageAdmin')
-    Route.get('/page-admin', 'adminsController.homeAdmin')
-    Route.get('/page-admin/san-pham/them-moi', 'productsController.formThem')
     Route.get('/page-admin/san-pham', 'ProductsController.viewSanPham')
     Route.get('/page-admin/san-pham/khong-ban', 'productsController.viewTableDestroy')
     Route.get('/page-admin/manager-page', 'AdminsController.viewManager')
-    Route.get('/page-admin/khach-hang', 'AdminsController.viewKhachHang')
+
 
     // POST
-    Route.post('/page-admin/san-pham/them-moi', 'productsController.themSanPham')
     Route.post('/page-admin/login-page-admin', 'AdminsController.loginPageAdmin')
-
-
-    // DELETE
-    Route.post('/page-admin/san-pham/deletesp/:id', 'productsController.deleteSanPham') // Update trạng thái của sản phẩm
-    Route.post('/page-admin/san-pham/revertsp/:id', 'productsController.revertSanPham')// Revert lại trạng thái sản phẩm
-    Route.post('/page-admin/san-pham/deletelsp/:id', 'productsController.deleteLoaiSanPham')
-    // UPDATE
     Route.post('/page-admin/san-pham/update/:id', 'productsController.updateSanPham')
-    Route.post('/page-admin/san-pham/updatelsp/:id', 'productsController.updateLoaiSanPham')
 
 })
-// ROTER CART
+// ROTER GIO HANG
 Route.post('/cart', 'BillsController.addToCart')
+Route.resource('/login', 'LoginPageAdminsController')
 
-Route.resource('/page-admin/loai-san-pham', 'LoaiSanPhamsController')
+Route.group(() => {
+    // ROUTER LOAI SAN PHAM
+    Route.resource('/admin/loai-san-pham', 'LoaiSanPhamsController')
+
+    // ROUter DOI TUONG
+    Route.resource('/admin/khach-hang', 'DoiTuongsController')
+
+    // ROUTER SAN PHAM
+    Route.resource('/admin/san-pham', 'SanPhamsController')
+
+    // ROUTER THONG KE
+    Route.resource('/admin/thong-ke', 'ThongKesController')
+
+    // ROUTE NHAP HANG
+    Route.resource('/admin/quan-ly-nhap-hang', 'PhieunhapsController')
+
+    // ROUTE NHA CUNG CAP
+    Route.resource('/admin/quan-ly-nha-cung-cap', 'NhaCungCapsController')
+
+    // ROUTER QUAN LY KHO
+    Route.resource('/admin/quan-ly-kho', 'QuanlykhosContronller')
+
+    // ROUTER ADMIN
+    Route.resource('/admin', 'PageadminsController')
+
+    // LOAI SAN PHAM
+    Route.post('admin/loai-san-pham/deletelsp/:id', 'LoaiSanPhamsController.deleteLoaiSanPham')
+
+    Route.post('admin/loai-san-pham/updatelsp/:id', 'LoaiSanPhamsController.updateLoaiSanPham')
+
+    Route.post('admin/loai-san-pham/revertlsp/:id', 'LoaiSanPhamsController.revertLoaiSanPham')
+
+    // SAN PHAM
+    Route.post('admin/san-pham/deletesp/:id', 'SanPhamsController.deleteSanPham')
+    Route.post('admin/san-pham/revertsp/:id', 'SanPhamsController.revertSanPham')
+    Route.post('admin/san-pham/khuyenmai/:id', 'SanPhamsController.themKhuyenMai')
+    Route.post('admin/san-pham/hetkhuyenmai/:id', 'SanPhamsController.hetKhuyenMai')
+    Route.post('admin/san-pham/update/:id', 'SanPhamsController.updateSanPham')
+
+    // NHA CUNG CAP 
+    Route.post('admin/quan-ly-nha-cung-cap/update/:id', 'NhaCungCapsController.updateNCC')
+    Route.post('admin/quan-ly-nha-cung-cap/delete/:id', 'NhaCungCapsController.deleteNCC')
+    Route.post('admin/quan-ly-nha-cung-cap/revert/:id', 'NhaCungCapsController.revertNCC')
+
+    // KHÁCH HÀNG
+    Route.post('admin/khach-hang/edit/:id', 'DoiTuongsController.editDoiTuong')
+    Route.post('admin/khach-hang/delete/:id', 'DoiTuongsController.deleteDoiTuong')
+    Route.post('admin/khach-hang/revert/:id', 'DoiTuongsController.revertDoiTuong')
+
+
+
+}).middleware(['auth', 'role:admin'])
+
+
+
+// ROUTER USER
+Route.resource('/trang-chu', 'UsersController')
+
 
 

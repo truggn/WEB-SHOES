@@ -31,9 +31,9 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/page-admin">Home</a></li>
-                                <li class="breadcrumb-item active">Danh mục</li>
-                                <li class="breadcrumb-item active" aria-current="page">Đối tượng</li>
+                                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                                <li class="breadcrumb-item active">Hệ thống</li>
+                                <li class="breadcrumb-item active" aria-current="page">Nhà cung cấp</li>
                             </ol>
                         </nav>
                     </div>
@@ -55,14 +55,15 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4">Đối tượng khách hàng</h4> 
+                        <h4 class="text-blue h4">Danh sách nhà cung cấp</h4> 
                     </div>
                     <div class="pull-right">
-                        <a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#Medium-modalThem" data-toggle="collapse" role="button"><i class="fa fa-plus"></i>Thêm loại khách hàng</a>
+                        <a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#Medium-modalThem" data-toggle="collapse" role="button"><i class="fa fa-plus"></i>Thêm nhà cung cấp</a>
                     </div>
                 </div>
+
                 <!-- //////////////////////////////////////// MODAL ////////////////////////--->
-                            <!-- MODAL THEM LOẠI DOI TUONG -->
+                            <!-- MODAL THÊM NHÀ CUNG CẤP -->
                             <div class="modal fade" id="Medium-modalThem" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -71,16 +72,24 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('DoiTuongsController.store') }}" method="POST" name="form-group">
+                                            <form action="{{ route('NhaCungCapsController.store') }}" method="POST" name="form-group">
                                                 <div class="form-group">
-                                                    <label for="uname">Tên loại khách hàng:</label>
-                                                    <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" name="doituong" required>
+                                                    <label for="uname">Tên nhà cung cấp:</label>
+                                                    <input type="text" class="form-control" id="tennhacungcap" placeholder="Nhập tên nhà cung cấp" name="tennhacungcap" required>
                                                 </div>
-                                                <div class="row form-group">
-                                                    <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                                                <div class="form-group">
+                                                    <label for="uname">Địa chỉ:</label>
+                                                    <input type="text" class="form-control" id="diachi" placeholder="Nhập địa chỉ" name="diachi" required>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="uname">Phone:</label>
+                                                    <input type="text" class="form-control" id="phone" placeholder="Nhập Số điện thoại" name="phone" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="uname">Email:</label>
+                                                    <input type="text" class="form-control" id="email" placeholder="Nhập Email" name="email" required>
+                                                </div>
+      
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                                     <button type="submit" class="btn btn-primary" name="btnXacNhanThem">Xác nhận</button>
@@ -91,9 +100,9 @@
                                 </div>
                             </div>
 
-<!-- MODAL CẬP NHẬT LOẠI DOI TUONG-->
-@each(dt in dataDT)
-<div class="modal fade" id="id{{dt.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- MODAL CẬP NHẬT NHA CUNG CAP-->
+@each(ncc in dataNCC)
+<div class="modal fade" id="id{{ncc.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -101,21 +110,29 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" name="form-group-update">
+                <form action="/admin/quan-ly-nha-cung-cap/update/{{ncc.id}}?_method=PUT" method="POST" name="form-group-update">
                     
                     <div class="form-group">
                         <label for="uname">Id:</label>
-                        <span class="form-control">{{dt.id}}</span>
+                        <span class="form-control">{{ncc.id}}</span>
                     </div>
                     <div class="form-group">
-                        <label for="uname">Tên loại khách hàng:</label>
-                        <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" value="{{dt.doituong}}" name="doituong" required>
+                        <label for="uname">Tên nhà cung cấp:</label>
+                        <input type="text" class="form-control" id="tennhacungcap" placeholder="Nhập tên nhà cung cấp" value="{{ncc.tennhacungcap}}" name="tennhacungcap" required>
                     </div>
-                    <div class="row form-group">
-                        <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
-                        <div class="col-12 col-md-9">
-                            <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
+                    <div class="form-group">
+                        <label for="uname">Địa chỉ:</label>
+                        <input type="text" class="form-control" id="diachi" placeholder="Nhập địa chỉ" value="{{ncc.diachi}}" name="diachi" required>
                     </div>
+                    <div class="form-group">
+                        <label for="uname">Phone:(+84)</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" value="{{ncc.phone}}" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uname">Email:</label>
+                        <input type="text" class="form-control" id="email" placeholder="Nhập email" value="{{ncc.email}}" name="email" required>
+                    </div>
+                
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-primary" name="btnXacNhanUpdate" id="btnXacNhanUpdate">Xác nhận</button>
@@ -125,60 +142,62 @@
         </div>
     </div>
 </div>
-
 @endeach
 
-<!-- MODAL XÓA DOI TUONG -->
-<div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content bg-warning">
-            <div class="modal-body text-center">
-                <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
-                <p>Bạn có muốn ngừng kinh doanh loại khách hàng này?</p>
-                <button type="button" class="btn btn-dark" id="btndeleteDT">Ok</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            <!-- MODAL XÓA NHÀ CUNG CẤP -->
+    <div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content bg-warning">
+                <div class="modal-body text-center">
+                    <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
+                    <p>Bạn có muốn ngưng hoạt động nhà cung cấp này?</p>
+                    <button type="button" class="btn btn-dark" id="btndeleteNCC">Ok</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- MODAL REVERT DOI TUONG -->
-<div class="modal fade" id="revert-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content bg-warning">
-            <div class="modal-body text-center">
-                <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
-                <p>Bạn có muốn phục hồi lại?</p>
-                <button type="button" class="btn btn-dark" id="btnRevertDT">Ok</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
                 <!--//////////////////////////////////////////END MODAL //////////////////////-->
 
-                <table class="table">
+                <!-- MODAL XÓA NHÀ CUNG CẤP -->
+    <div class="modal fade" id="revert-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content bg-warning">
+                <div class="modal-body text-center">
+                    <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
+                    <p>Bạn có muốn hoạt động lại nhà cung cấp này?</p>
+                    <button type="button" class="btn btn-dark" id="btnrevertNCC">Ok</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                <!--//////////////////////////////////////////END MODAL //////////////////////-->
+    <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Loại khách hàng</th>
-                            <th scope="col">Mô tả</th>
+                            <th scope="col">Tên cung cấp</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @each(dt in dataDT)
-                          
+                        @each(ncc in dataNCC)  
                         <tr>
-                            <th scope="row">{{dt.id}}</th>
-                            <td>{{dt.doituong}}</td>
-                            <td>{{dt.mota}}</td>
+                            <th scope="row">{{ncc.id}}</th>
+                            <td>{{ncc.tennhacungcap}}</td>
+                            <td>{{ncc.diachi}}</td>
+                            <td>{{ncc.phone}}</td>
+                            <td>{{ncc.email}}</td>
                             <td>
-                                @if(dt.trangthai == 1)
-                                  <p>Còn kinh doanh</p>
+                                @if(ncc.trangthai == 1)
+                                  <p>Còn hoạt động</p>
                                 @else
-                                    <p>Hết kinh doanh</p>
+                                    <p>Ngưng hoạt động</p>
                                 @endif
                             </td>
                             <td>
@@ -187,13 +206,13 @@
                                         <i class="dw dw-more"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">     
-                                       @if(dt.trangthai == 1)
-                                       <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#id{{dt.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                       <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                       @else
-                                       <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#revert-modal" href="#"><i class="dw dw-delete-3"></i> Revert</a>
-                                       @endif
-                                        
+                                        @if(ncc.trangthai == 1)
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{ncc.id}}" data-target="#id{{ncc.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{ncc.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
+                                        @else
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{ncc.id}}" data-target="#revert-modal" href="#"><i class="dw dw-delete-3"></i>Kích hoạt</a>   
+                                        @endif
+                                       
                                     </div>
                                 </div>
                             </td>
@@ -201,7 +220,8 @@
                         @endeach
 
                     </tbody>
-                </table>             
+     </table>       
+
                 <div class="collapse collapse-box" id="basic-table" >
                 </div>
             </div>     
@@ -213,38 +233,38 @@
     </div>
 </div>
 <div>
-    <form name="delete-dt-form" method="POST"></form>
-    <form name="revert-dt-form" method="POST"></form>
+    <form name="delete-ncc-form" method="POST"></form>
+    <form name="revert-ncc-form" method="POST"></form>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded' , function(){
         var id;
-        var formDeleteDT = document.forms['delete-dt-form']
-        var btnDeleteDT = document.getElementById('btndeleteDT')
-        var formRevertDT = document.forms['revert-dt-form']
-        var btnRevertDT = document.getElementById('btnRevertDT')
+        var formDeleteNCC = document.forms['delete-ncc-form']
+        var btnDeleteNCC = document.getElementById('btndeleteNCC')
+        var formRevertNCC = document.forms['revert-ncc-form']
+        var btnRevertNCC = document.getElementById('btnrevertNCC')
 
-        // XỬ LÝ NGƯNG HOẠT ĐỘNG 
+        // XỬ LÝ NGƯNG HOẠT ĐỘNG NHÀ CUNG CẤP
         $('#warning-modal').on('show.bs.modal', function(event){
             var button =  $(event.relatedTarget);
                 id = button.data('id');
                 console.log(id)
         })
-        btnDeleteDT.onclick = () =>{
-            formDeleteDT.action = '/admin/khach-hang/delete/' + id + '?_method=PUT'
-            formDeleteDT.submit()
+        btnDeleteNCC.onclick = () =>{
+            formDeleteNCC.action = '/admin/quan-ly-nha-cung-cap/delete/' + id + '?_method=PUT'
+            formDeleteNCC.submit()
         }
         
-        // XỬ LÝ HOẠT ĐỘNG TRỞ LẠI
+        // XỬ LÝ HOẠT ĐỘNG TRỞ LẠI NCC
         $('#revert-modal').on('show.bs.modal', function(event){
             var button =  $(event.relatedTarget);
                 id = button.data('id');
                 console.log(id)
         })
-        btnRevertDT.onclick = () =>{
-            formRevertDT.action = '/admin/khach-hang/revert/' + id + '?_method=PUT'
-            formRevertDT.submit()
+        btnRevertNCC.onclick = () =>{
+            formRevertNCC.action = '/admin/quan-ly-nha-cung-cap/revert/' + id + '?_method=PUT'
+            formRevertNCC.submit()
         }  
     });
 </script>

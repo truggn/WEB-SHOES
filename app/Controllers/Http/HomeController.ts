@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/user'
+import User from 'App/Models/Users'
 import SanPham from 'App/Models/Sanpham'
 import Loaisanpham from 'App//Models/Loaisanpham'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
@@ -13,7 +13,7 @@ export default class HomeController {
 
         return view.render('home/index', { datasanpham })
     }
-    
+
 
     // GET REGISTER
     async viewregister({ view, request, response }: HttpContextContract) {
@@ -30,6 +30,8 @@ export default class HomeController {
             password: schema.string({ trim: true }, [
                 rules.confirmed(),
             ]),
+
+
         })
 
         const userDetails = await request.validate({
@@ -43,27 +45,12 @@ export default class HomeController {
         const user = new User()
         user.email = userDetails.email
         user.password = userDetails.password
+
         await user.save()
 
-        return response.redirect('login')
+        return response.json(user)
     }
 
-    // GET VIEW LOGIN
-    public async viewlogin({ view, request, response }: HttpContextContract) {
-        return view.render('home/login')
-    }
-
-    // POST VIEW LOGIN
-    public async postlogin({ view, request, response, auth }: HttpContextContract) {
-
-        const rememBerMe = !!request.input('checkMe')
-        const email = request.input('email')
-        const password = request.input('password')
-
-        await auth.attempt(email, password, rememBerMe)
-
-        response.redirect('page-admin')
-    }
     // POST VIEW PROFILE
     public async profile({ view, auth }: HttpContextContract) {
         return auth.user;
@@ -71,7 +58,7 @@ export default class HomeController {
     // POST LOGOUT-PAGE
     public async logout({ view, response, auth }: HttpContextContract) {
         await auth.logout()
-        return response.redirect('/login')
+        return response.redirect('admin/login')
     }
     // VIEW FORGET PASS
     public async viewforgetPass({ view, response, request }: HttpContextContract) {
