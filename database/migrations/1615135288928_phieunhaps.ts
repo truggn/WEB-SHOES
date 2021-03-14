@@ -7,9 +7,12 @@ export default class Phieunhaps extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.integer('id_user').unsigned().references('id').inTable('users').onDelete('CASCADE')
-      table.integer('tongtien').notNullable(),
-        table.string('lo').notNullable()
-      table.string('masothue')
+      table.integer('id_ncc').unsigned().references('id').inTable('nhacungcaps').onDelete('CASCADE')
+      table.integer('tongtien')
+      table.integer('solo')
+      table.integer('vat')
+      table.integer('nocong').defaultTo(0)
+      table.string('ghichu')
       table.boolean('trangthai').defaultTo(1)
       table.timestamps(true)
     })

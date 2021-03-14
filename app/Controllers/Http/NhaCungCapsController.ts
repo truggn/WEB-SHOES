@@ -16,6 +16,7 @@ export default class NhaCungCapsController {
       const dataNCC = request.only(['tennhacungcap', 'diachi', 'phone', 'email'])
       await Nhacungcap.create(dataNCC)
       return response.redirect('back')
+
     } catch (error) {
       return response.json('thêm thất bại')
     }

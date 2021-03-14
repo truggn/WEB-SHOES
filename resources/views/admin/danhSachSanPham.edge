@@ -104,7 +104,7 @@
                         </div>
                         <div class="modal-body">
                             
-                                <form action="{{ route ('admin_san_pham.store')}}"  name="form-group" enctype="multipart/form-data" method="POST">
+                                <form action="{{ route ('page_admin_san_pham.store')}}"  name="form-group" enctype="multipart/form-data" method="POST">
                                     <div class="row">
                                         <div class="col col-md-6">
                                             <div class="form-group">
@@ -448,7 +448,7 @@
                 idsp = button.data('id'); 
             })
             btnXoa.onclick = () =>{                       
-                formXoa.action='/admin/san-pham/deletesp/'+ idsp +'?_method=PUT'          
+                formXoa.action='/page-admin/san-pham/deletesp/'+ idsp +'?_method=PUT'          
                 formXoa.submit()
             };
 
@@ -458,7 +458,7 @@
                 idsp = button.data('id'); 
             })
             btnRevert.onclick = () =>{                       
-                formRevertSP.action='/admin/san-pham/revertsp/'+ idsp +'?_method=PUT'          
+                formRevertSP.action='/page-admin/san-pham/revertsp/'+ idsp +'?_method=PUT'          
                 formRevertSP.submit()
             };
 
@@ -470,7 +470,7 @@
                 
             })
             btnKhuyenMai.onclick = () =>{
-                formKhuyenMai.action='/admin/san-pham/khuyenmai/'+idsp+'?_method=PUT'
+                formKhuyenMai.action='/page-admin/san-pham/khuyenmai/'+idsp+'?_method=PUT'
                 formKhuyenMai.submit()
             };
 

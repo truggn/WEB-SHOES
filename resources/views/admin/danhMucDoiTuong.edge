@@ -232,7 +232,7 @@
                 console.log(id)
         })
         btnDeleteDT.onclick = () =>{
-            formDeleteDT.action = '/admin/khach-hang/delete/' + id + '?_method=PUT'
+            formDeleteDT.action = '/page-admin/khach-hang/delete/' + id + '?_method=PUT'
             formDeleteDT.submit()
         }
         
@@ -243,7 +243,7 @@
                 console.log(id)
         })
         btnRevertDT.onclick = () =>{
-            formRevertDT.action = '/admin/khach-hang/revert/' + id + '?_method=PUT'
+            formRevertDT.action = '/page-admin/khach-hang/revert/' + id + '?_method=PUT'
             formRevertDT.submit()
         }  
     });

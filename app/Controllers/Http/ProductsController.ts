@@ -7,7 +7,7 @@ import Application from '@ioc:Adonis/Core/Application'
 
 export default class ProductsController {
 
-    public async viewHomeSanPham({ view, response, request, params }: HttpContextContract) {
+    public async viewSanPham({ view, response, request, params }: HttpContextContract) {
         const dataLoaiSP = await Loaisanpham.query().select('*').from('loaisanphams')
         const idlsp = request.input("id", dataLoaiSP[0].id)
         const listDataSP = await Sanpham.query().select('*').from('sanphams').where('id_lsp', idlsp).preload('loaisanpham').preload('khachhang')
@@ -78,36 +78,7 @@ export default class ProductsController {
     }
 
 
-    // POST THEM LOẠI SẢN PHẨM
-    // public async themLoaiSanPham({ view, response, request }: HttpContextContract) {
-    //     const newLoaiSanPham = new Loaisanpham()
-    //     newLoaiSanPham.tenloai = request.input('tenloai')
-    //     newLoaiSanPham.mota = request.input('mota')
 
-    //     const logo = request.file('logo')
-    //     const name = `${new Date().getTime()}.${logo?.extname}`
-    //     if (!logo) {
-    //         return 'Please upload file'
-    //     }
-    //     await logo.move(Application.publicPath('uploads/logo'), {
-    //         name: name,
-    //     })
-    //     newLoaiSanPham.logo = name
-
-    //     await newLoaiSanPham.save()
-    //     return response.redirect('back')
-    // }
-
-    // DELETE LOAI SAN PHAM
-    public async deleteLoaiSanPham({ view, response, request, params }: HttpContextContract) {
-        try {
-            const id = params.id
-            await Loaisanpham.query().where('id', id).update({ trangthai: 0 })
-            return response.redirect('back')
-        } catch (error) {
-            return response.json('that bai')
-        }
-    };
 
     // POST CHUYEN TRANG THAI NGUNG KINH DOANH
     public async deleteSanPham({ view, response, request, params }: HttpContextContract) {

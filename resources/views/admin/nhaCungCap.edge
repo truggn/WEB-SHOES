@@ -252,7 +252,7 @@
                 console.log(id)
         })
         btnDeleteNCC.onclick = () =>{
-            formDeleteNCC.action = '/admin/quan-ly-nha-cung-cap/delete/' + id + '?_method=PUT'
+            formDeleteNCC.action = '/page-admin/quan-ly-nha-cung-cap/delete/' + id + '?_method=PUT'
             formDeleteNCC.submit()
         }
         
@@ -263,7 +263,7 @@
                 console.log(id)
         })
         btnRevertNCC.onclick = () =>{
-            formRevertNCC.action = '/admin/quan-ly-nha-cung-cap/revert/' + id + '?_method=PUT'
+            formRevertNCC.action = '/page-admin/quan-ly-nha-cung-cap/revert/' + id + '?_method=PUT'
             formRevertNCC.submit()
         }  
     });

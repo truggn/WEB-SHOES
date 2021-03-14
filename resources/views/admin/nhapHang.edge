@@ -58,89 +58,9 @@
                         <h4 class="text-blue h4">Danh sách phiếu nhập</h4> 
                     </div>
                     <div class="pull-right">
-                        <a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#Medium-modalThem" data-toggle="collapse" role="button"><i class="fa fa-plus"></i>Nhập hàng</a>
+                        <a href="/page-admin/quan-ly-nhap-hang/create" class="btn btn-primary btn-sm scroll-click" rel="content-y" ><i class="fa fa-plus"></i>Nhập hàng</a>
                     </div>
                 </div>
-                <!-- //////////////////////////////////////// MODAL ////////////////////////--->
-                            <!-- MODAL THEM LOẠI DOI TUONG -->
-                            <div class="modal fade" id="Medium-modalThem" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myLargeModalLabel">Điền thông tin</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('DoiTuongsController.store') }}" method="POST" name="form-group">
-                                                <div class="form-group">
-                                                    <label for="uname">Tên loại khách hàng:</label>
-                                                    <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" name="doituong" required>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
-                                                    <div class="col-12 col-md-9">
-                                                        <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                                    <button type="submit" class="btn btn-primary" name="btnXacNhanThem">Xác nhận</button>
-                                                </div>
-                                            </form>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-
-<!-- MODAL CẬP NHẬT LOẠI DOI TUONG-->
-@each(dt in dataDT)
-<div class="modal fade" id="id{{dt.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myLargeModalLabel">Cập nhật thông tin</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST" name="form-group-update">
-                    
-                    <div class="form-group">
-                        <label for="uname">Id:</label>
-                        <span class="form-control">{{dt.id}}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="uname">Tên loại khách hàng:</label>
-                        <input type="text" class="form-control" id="tenloaikhachhang" placeholder="Nhập tên loại khách hàng" value="{{dt.doituong}}" name="doituong" required>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col"><label for="mota-input" class=" form-control-label">Mô tả:</label></div>
-                        <div class="col-12 col-md-9">
-                            <textarea name="mota" id="textarea-input" rows="2" placeholder="Content..." class="form-control"></textarea></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary" name="btnXacNhanUpdate" id="btnXacNhanUpdate">Xác nhận</button>
-                    </div>
-                </form>
-            </div> 
-        </div>
-    </div>
-</div>
-
-@endeach
-
-<!-- MODAL XÓA DOI TUONG -->
-<div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content bg-warning">
-            <div class="modal-body text-center">
-                <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
-                <p>Bạn có muốn xóa loại khách hàng này?</p>
-                <button type="button" class="btn btn-dark" id="btnOk">Ok</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
                 <!--//////////////////////////////////////////END MODAL //////////////////////-->
 
                 <table class="table">
@@ -148,30 +68,42 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nhà cung cấp</th>
-                            <th scope="col">Số lô</th>
-                            <th scope="col">Mã số thuế</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Tổng tiền</th>
+                            <th scope="col">Lô hàng</th>
+                            <th scope="col">Phí VAT(%)</th>
+                            <th scope="col">Tổng tiền(vnđ)</th>
                             <th scope="col">Ngày nhập</th>
+                            <th scope="col">Trạng thái</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @each(dt in dataDT)
+                        @each(pn in dataPN)
                           
                         <tr>
-                            <th scope="row">{{dt.id}}</th>
-                            <td>{{dt.doituong}}</td>
-                            <td>{{dt.mota}}</td>
-                            <td>{{dt.trangthai}}</td>
+                            <th scope="row">{{pn.id}}</th>
+                            <td>{{pn.nhacungcap.tennhacungcap}}</td>
+                            <td>{{pn.solo}}</td>
+                            <td>{{pn.vat}}</td>
+                            <td>{{pn.tongtien}}</td>
+                            <td>{{pn.createdAt}}</td>
+                            <td>
+                                @if(pn.trangthai == 1)
+                                    <p>Đã thanh toán</p>
+                                @elseif(pn.trangthai == 2)
+                                    <p>Còn nợ</p>
+                                @else
+                                    <p>Lưu</p>
+                                @endif
+                            </td>
+                        
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                         <i class="dw dw-more"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">     
-                                        <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#id{{dt.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                        <a class="dropdown-item" data-toggle="modal" data-id="{{dt.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{pn.id}}" data-target="#id{{pn.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{pn.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -190,21 +122,6 @@
         </div>
     </div>
 </div>
-
-{{--  <script>
-    document.addEventListener('DOMContentLoaded' , function(event){
-        var id;
-        var formUpdate = document.forms['form-group-update']
-        var btnUpdate = document.getElementById('btnXacNhanUpdate')
-
-        // $('#id{{dt.id}}').on('show.bs.modal', function(){
-        //     var button =  $(event.relatedTarget);
-        //         id = button.data('id');
-        //         console.log("id xoa la:",id)
-        // })
-        
-    })
-</script>  --}}
 
 @endsection
 

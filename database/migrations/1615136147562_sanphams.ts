@@ -15,7 +15,7 @@ export default class Sanphams extends BaseSchema {
       table.integer('giaban').notNullable()
       table.string('mota')
       table.integer('khuyenmai')
-      table.boolean('trangthaikhuyenmai').defaultTo(1)
+      table.boolean('trangthaikhuyenmai').defaultTo(0)
       table.boolean('trangthai').defaultTo(1)
       table.timestamps(true)
     })

@@ -18,6 +18,7 @@ export default class DoiTuongsController {
     try {
       const dataDT = request.only(['doituong', 'mota'])
       await Doituong.create(dataDT)
+      return response.redirect('back')
     } catch (error) {
       return response.json(error)
     }
@@ -59,6 +60,10 @@ export default class DoiTuongsController {
       return response.json(error)
     }
   };
+  public async postpn({ request }: HttpContextContract) {
+    const data = request.all()
+    console.log(data, "data")
 
+  }
 
 }

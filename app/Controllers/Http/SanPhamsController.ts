@@ -57,19 +57,6 @@ export default class SanPhamsController {
     }
   }
 
-  public async show({ }: HttpContextContract) {
-  }
-
-  public async edit({ }: HttpContextContract) {
-  }
-
-  public async update({ }: HttpContextContract) {
-  }
-
-  public async destroy({ }: HttpContextContract) {
-  }
-
-
   // POST CHUYEN TRANG THAI NGUNG KINH DOANH
   public async deleteSanPham({ view, response, request, params }: HttpContextContract) {
     try {
@@ -126,11 +113,11 @@ export default class SanPhamsController {
   }
 
   // THEM KHUYEN MAI
-  public async themKhuyenMai({ view, response, request, params }: HttpContextContract) {
+  public async themKhuyenMai({ response, request, params }: HttpContextContract) {
     try {
       const id = params.id
       const khuyenmai = request.input('khuyenmai')
-      await Sanpham.query().where('id', id).update({ khuyenmai, trangthaikhuyenmai: 0 }) // chuyển trạng thái về 0,
+      await Sanpham.query().where('id', id).update({ khuyenmai, trangthaikhuyenmai: 1 }) // chuyển trạng thái về 0,
       return response.redirect('back')
     } catch (error) {
       return response.json('error')

@@ -10,8 +10,8 @@ export default class Chitiethoadons extends BaseSchema {
       table.integer('id_sanpham').unsigned().references('id').inTable('sanphams').onDelete('CASCADE')
       table.integer('thanhtien').notNullable()
       table.integer('soluong').notNullable()
+      table.integer('khuyenmai')
       table.string('ghichu')
-      table.boolean('trangthai').defaultTo(1)
       table.timestamps(true)
     })
   }
