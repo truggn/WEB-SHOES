@@ -41,24 +41,22 @@ Route.group(() => {
 Route.group(() => {
 
     Route.get('/trang-chu', 'homeController.index')
-    Route.get('/cart', 'billsController.viewHoaDon')
+    Route.get('/gio-hang', 'billsController.viewHoaDon')
+    Route.post('/gio-hang/addtocart', 'billsController.addToCart')
+    Route.get('/gio-hang/checkout', 'billsController.checkout')
 })
 
 // ROUTER PRODUCT
 Route.group(() => {
     Route.get('/san-pham', 'productsController.viewSanPham')
-    Route.get('/san-pham/:id', 'productsController.viewChiTietSP')
-    Route.post('/san-pham/them-san-pham', 'productsController.themSanPham')
-
+    Route.get('/san-pham/:id', 'productsController.viewDetail')
 
 })
 
 // ROUTER ADMIN
 Route.group(() => {
 
-    Route.get('/page-admin/san-pham/khong-ban', 'productsController.viewTableDestroy')
     Route.get('/page-admin/manager-page', 'AdminsController.viewManager')
-
 
     // POST
     Route.post('/page-admin/login-page-admin', 'AdminsController.loginPageAdmin')
@@ -66,7 +64,7 @@ Route.group(() => {
 
 })
 // ROTER GIO HANG
-Route.post('/cart', 'BillsController.addToCart')
+
 
 Route.group(() => {
     // ROUTER LOAI SAN PHAM
@@ -102,10 +100,11 @@ Route.group(() => {
 
     // SAN PHAM
     Route.post('page-admin/san-pham/deletesp/:id', 'SanPhamsController.deleteSanPham')
-    Route.post('page-admin/san-pham/revertsp/:id', 'SanPhamsController.revertSanPham')
+    Route.post('page-admin/san-pham/revertsp/:id', 'SanPhamsController.kinhDoanhSanPham')
     Route.post('page-admin/san-pham/khuyenmai/:id', 'SanPhamsController.themKhuyenMai')
     Route.post('page-admin/san-pham/hetkhuyenmai/:id', 'SanPhamsController.hetKhuyenMai')
     Route.post('page-admin/san-pham/update/:id', 'SanPhamsController.updateSanPham')
+    Route.post('page-admin/san-pham/kinhdoanh/:id', 'SanPhamsController.kinhDoanh')
 
     // NHA CUNG CAP 
     Route.post('page-admin/quan-ly-nha-cung-cap/update/:id', 'NhaCungCapsController.updateNCC')

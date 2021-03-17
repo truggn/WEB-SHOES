@@ -7,6 +7,7 @@ export default class Chitietphieunhaps extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.integer('id_pn').unsigned().references('id').inTable('phieunhaps').onDelete('CASCADE')
+      table.integer('id_sp').unsigned().references('id').inTable('sanphams').onDelete('CASCADE')
       table.string('tensanpham').notNullable()
       table.integer('soluong').notNullable()
       table.integer('gianhap').notNullable()

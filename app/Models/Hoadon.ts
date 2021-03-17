@@ -6,7 +6,7 @@ export default class Hoadon extends BaseModel {
   public id: number
 
   @column()
-  public user_id:number
+  public user_id: number
 
   @column()
   public tongtien: number
@@ -15,7 +15,10 @@ export default class Hoadon extends BaseModel {
   public phiship: number
 
   @column()
-  public trangthai:boolean
+  public loinhan: string
+
+  @column()
+  public trangthai: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

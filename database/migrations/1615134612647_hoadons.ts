@@ -6,13 +6,14 @@ export default class Hoadons extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
-      table.integer('tongtien').notNullable()
+      table.integer('tongtien')
       table.integer('phiship')
-      table.string('hoten').notNullable()
-      table.string('diachi').notNullable()
-      table.string('sdt').notNullable()
+      table.string('hoten')
+      table.string('diachi')
+      table.string('sdt')
       table.string('email')
-      table.boolean('trangthai').defaultTo(1)
+      table.string('loinhan')
+      table.boolean('trangthai').defaultTo(1) // 1: chua thanh toan// 0 da thanh toan
       table.timestamps(true)
     })
   }

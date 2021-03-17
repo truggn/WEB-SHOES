@@ -1,139 +1,166 @@
 @layout('layouts/user/index')
 
 @section('content')
- <!--//top-header-nav---->
-			<!----start-slider-script---->
-			<script src="js/responsiveslides.min.js"></script>
-			 <script>
-			    // You can also use "$(window).load(function() {"
-			    $(function () {
-			      // Slideshow 4
-			      $("#slider4").responsiveSlides({
-			        auto: true,
-			        pager: true,
-			        nav: true,
-			        speed: 500,
-			        namespace: "callbacks",
-			        before: function () {
-			          $('.events').append("<li>before event fired.</li>");
-			        },
-			        after: function () {
-			          $('.events').append("<li>after event fired.</li>");
-			        }
-			      });
-			
-			    });
-			  </script>
-			<!----//End-slider-script---->
-			<!-- Slideshow 4 -->
-			    <div  id="top" class="callbacks_container">
-			      <ul class="rslides" id="slider4">
-			        <li>
-			          <img src="images/slide1.png" alt="">
-			          <div class="caption">
-			          	<div class="slide-text-info">
-			          		<h1>WILL HELM</h1>
-			          		<label>WINTER</label>
-			          		<a class="slide-btn" href="#"><span>99.90$</span> <small>GET NOW</small><label> </label></a>
-			          	</div>
-			          </div>
-			        </li>
-			        <li>
-			          <img src="./images/slide2.png" alt="">
-			          <div class="caption">
-			          	<div class="slide-text-info">
-			          		<h1>FAST NER2</h1>
-			          		<label>Dress Shoe</label>
-			          		<a class="slide-btn" href="#"><span>99.90$</span> <small>GET NOW</small><label> </label></a>
-			          	</div>
-			          </div>
-			        </li>
-			        <li>
-			          <img src="./images/slide1.png" alt="">
-			           <div class="caption">
-			           	<div class="slide-text-info">
-			          		<h1>WILL HELM</h1>
-			          		<label>WINTER</label>
-			          		<a class="slide-btn" href="#"><span>99.90$</span> <small>GET NOW</small><label> </label></a>
-			          	</div>
-			          </div>
-			        </li>
-			      </ul>
-			    </div>
-			    <div class="clearfix"> </div>
-			<!----- //End-slider---->
-			<!----content---->
-				<div class="content">
-					<div class="container">
-				<!---top-row--->
-				<div class="top-row">
-					<div class="col-xs-4">
-						<div class="top-row-col1 text-center">
-							<h2>WOMAN</h2>
-							<img class="r-img text-center" src="./images/img-w.jpg" title="name" />
-							<span><img src="./images/obj1.png" title="name" /></span>
-							<h4>TOTAL</h4>
-							<label>357 PRODUCTS</label>
-							<a class="r-list-w" href="single-page.html"><img src="./images/list-icon.png" title="list" /></a>
-						</div>
-					</div>
-					<div class="col-xs-4">
-						<div class="top-row-col1 text-center">
-							<h2>MAN</h2>
-							<img class="r-img text-center" src="./images/man-r-img.jpg" title="name" />
-							<span><img src="images/obj2.png" title="name" /></span>
-							<h4>TOTAL</h4>
-							<label>357 PRODUCTS</label>
-							<a class="r-list-w" href="single-page.html"><img src="images/list-icon.png" title="list" /></a>
-						</div>
-					</div>
-					<div class="col-xs-4">
-						<div class="top-row-col1 text-center">
-							<h2>KIDS</h2>
-							<img class="r-img text-center" src="images/kid-r-img.jpg" title="name" />
-							<span><img src="images/obj3.png" title="name" /></span>
-							<h4>TOTAL</h4>
-							<label>357 PRODUCTS</label>
-							<a class="r-list-w" href="single-page.html"><img src="./images/list-icon.png" title="list" /></a>
-						</div>
-					</div>
-					<vdi class="clearfix"> </div>
-				</div>
-				<!---top-row--->
-				<div class="container"> 
-				<!----speical-products---->
-				<div class="special-products">
-					<div class="s-products-head">
-						<div class="s-products-head-left">
-							<h3>SPECIAL <span>PRODUCTS</span></h3>
-						</div>
-						<div class="s-products-head-right">
-							<a href="products.html"><span> </span>view all products</a>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<!----special-products-grids---->
-					<div class="special-products-grids">
-						@each(sanpham in datasanpham)
-						<form action="#">
-							<div class="col-md-3 special-products-grid text-center">
-								<a class="brand-name" href="/chi-tiet-san-pham"><img src="../uploads/logo/{{sanpham.loaisanpham.logo}}" title="#" /></a>
-								<a class="product-here" href="/san-pham/{{sanpham.id}}"><img src="../uploads/{{sanpham.hinhanh}}" title="product-name" /></a>
-								<h4><a href="single-page.html">{{sanpham.tensanpham}}</a></h4>
-								<a class="product-btn" data-id="{{sanpham.id}}" href="#"><span>{{sanpham.giaban}}$</span><small>Mua Ngay</small><label> </label></a>
-							</div>
-						</form>	
-						@endeach
 
-						<div class="clearfix"> </div>
-					</div>
-					<!---//special-products-grids---->
-				</div>
-				<!---//speical-products---->
-				</div>
-			<!----content---->
-			<!--/////////////////////////////////////////// THEM VAO GIO HANG ///////////////////////////////-->
-			<script>
+	  <!--  Modal -->
+      @each(sp in datasanpham)
+        
+      <div class="modal fade" id="ids{{sp.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <div class="row align-items-stretch">
+                <div class="col-lg-6 p-lg-0">
+                  <a class="product-view d-block h-100 bg-cover bg-center" style="background: url(../uploads/{{sp.hinhanh}})" title="{{sp.tensanpham}}"></a>
+                </div>
+                <div class="col-lg-6">
+                  <button class="close p-4" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <div class="p-5 my-md-4">
+                    <ul class="list-inline mb-2">
+                      <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+                      <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+                      <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+                      <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+                      <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+                    </ul>
+                    <h2 class="h4">{{sp.tensanpham}}</h2>
+                    <p class="text-muted">${{sp.giaban}}</p>
+                    <p class="text-small mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ullamcorper leo, eget euismod orci. Cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus. Vestibulum ultricies aliquam convallis.</p>
+                    <div class="row align-items-stretch mb-4">
+                      <div class="col-sm-7 pr-sm-0">
+                        <div class="border d-flex align-items-center justify-content-between py-1 px-3"><span class="small text-uppercase text-gray mr-4 no-select">Số lượng</span>
+                          <div class="quantity">
+                            <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
+                            <input class="form-control border-0 shadow-0 p-0" type="text" value="1">
+                            <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-5 pl-sm-0"><a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0" href="cart.html">Thêm vào giỏ</a></div>
+                    </div><a class="btn btn-link text-dark p-0" href="#"><i class="far fa-heart mr-2"></i>Add to wish list</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endeach
+      <!-- HERO SECTION-->
+      <div class="container">
+        <section class="hero pb-3 bg-cover bg-center d-flex align-items-center" style="background: url(img/hero-banner-alt.jpg)">
+          <div class="container py-5">
+            <div class="row px-4 px-lg-5">
+              <div class="col-lg-6">
+                <p class="text-muted small text-uppercase mb-2">New Inspiration 2020</p>
+                <h1 class="h2 text-uppercase mb-3">20% off on new season</h1><a class="btn btn-dark" href="shop.html">Mua sắm ngay</a>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- CATEGORIES SECTION-->
+    	    <!-- SERVICES-->
+        <section class="py-5 bg-light mt-3">
+          <div class="container">
+            <div class="row text-center">
+              <div class="col-lg-4 mb-3 mb-lg-0">
+                <div class="d-inline-block">
+                  <div class="media align-items-end">
+                    <svg class="svg-icon svg-icon-big svg-icon-light">
+                      <use xlink:href="#delivery-time-1"> </use>
+                    </svg>
+                    <div class="media-body text-left ml-3">
+                      <h6 class="text-uppercase mb-1">Miễn phí vận chuyển</h6>
+                      <p class="text-small mb-0 text-muted">SHIP hỏa tốc 1h nhận hàng trong nội thành HCM</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mb-3 mb-lg-0">
+                <div class="d-inline-block">
+                  <div class="media align-items-end">
+                    <svg class="svg-icon svg-icon-big svg-icon-light">
+                      <use xlink:href="#helpline-24h-1"> </use>
+                    </svg>
+                    <div class="media-body text-left ml-3">
+                      <h6 class="text-uppercase mb-1">Hỗ trợ 24/24</h6>
+                      <p class="text-small mb-0 text-muted">Gọi ngay 0909300746</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="d-inline-block">
+                  <div class="media align-items-end">
+                    <svg class="svg-icon svg-icon-big svg-icon-light">
+                      <use xlink:href="#label-tag-1"> </use>
+                    </svg>
+                    <div class="media-body text-left ml-3">
+                      <h6 class="text-uppercase mb-1">CAM KẾT CHÍNH HÃNG</h6>
+                      <p class="text-small mb-0 text-muted">Cam kết sản phẩm chính hãng từ Châu Âu, Châu Mỹ,...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- TRENDING PRODUCTS-->
+        <section class="py-5">
+          <header>
+            <p class="small text-muted small text-uppercase mb-1">Xứng tầm phong cách</p>
+            <h2 class="h5 text-uppercase mb-4">Sản phẩm nổi bật</h2>
+          </header>
+          <div class="row">
+            <!-- PRODUCT-->
 
-			</script>
+            @each(sp in datasanpham)
+              
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="product text-center">
+                <div class="position-relative mb-3">
+                  <div class="badge text-white badge-"></div><a class="d-block" href="detail.html"><img class="img-fluid w-100" src="../uploads/{{sp.hinhanh}}" alt="..."></a>
+                  <div class="product-overlay">
+                    <ul class="mb-0 list-inline">
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Thêm vào giỏ</a></li>
+                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" data-id="{{sp.id}}" title="Xem" data-target="#ids{{sp.id}}" data-toggle="modal"><i class="fas fa-eye"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <h6> <a class="reset-anchor" href="detail.html">{{sp.tensanpham}}</a></h6>
+                <p class="small text-muted">${{sp.giaban}}</p>
+              </div>
+            </div>
+            @endeach
+
+          </div>
+        </section>
+
+        <!-- NEWSLETTER-->
+        <section class="py-5">
+          <div class="container p-0">
+            <div class="row">
+              <div class="col-lg-6 mb-3 mb-lg-0">
+                <h5 class="text-uppercase">Liên hệ chúng tôi</h5>
+                <p class="text-small text-muted mb-0">Nhận thông tin thường xuyên từ cửa hàng.</p>
+              </div>
+              <div class="col-lg-6">
+                <form action="#">
+                  <div class="input-group flex-column flex-sm-row mb-3">
+                    <input class="form-control form-control-lg py-3" type="email" placeholder="Điền Email của bạn" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-dark btn-block" id="button-addon2" type="button">Theo dõi</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
 @endsection
+
+
+

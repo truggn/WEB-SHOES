@@ -11,9 +11,9 @@ export default class Phieunhaps extends BaseSchema {
       table.integer('tongtien')
       table.integer('solo')
       table.integer('vat')
-      table.integer('nocong').defaultTo(0)
+      table.integer('nocong').defaultTo(0)// 0: ko co no, 1: co no
       table.string('ghichu')
-      table.boolean('trangthai').defaultTo(1)
+      table.boolean('trangthai').defaultTo(1) // 0: da thanh toan het, 1: Phieu nhap luu
       table.timestamps(true)
     })
   }

@@ -21,197 +21,131 @@
 <div class="mobile-menu-overlay"></div>
 
 <div class="main-container">
-    <div class=" xs-pd-20-10">
-        <div class="min-height-200px">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="title">
-                            <h4>Advanced Components</h4>
-                        </div>
-                        <nav aria-label="breadcrumb" role="navigation">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Advanced Components</li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="col-md-6 col-sm-12 text-right">
-                        <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                January 2018
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Export List</a>
-                                <a class="dropdown-item" href="#">Policies</a>
-                                <a class="dropdown-item" href="#">View Assets</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+    <div class=" xs-pd-20-10" style="height:400px">
+        <div class="min-height-200px" >         
             <!-- Bootstrap Select Start -->
-            <div class="pd-20 card-box mb-10">
-                <div class="clearfix">
-                    <div class="pull-left">
-                        <h5 class="text-blue h5">Chi tiết nhập.</h5>
-                        <p class="mb-30">Nhấp vào đấy để <code><button type="button" id="btnAddSanPham" class="btn btn-primary">Nhập</button></code> sản phẩm mới.</p>
-                    </div>
-                </div>
-                <form action="{{route ('page_admin_quan_ly_nhap_hang.store')}}" method="POST"> 
-                    <div class="clearfix">
-                        <div class="pull-left" style="margin-top:-10px">
-                            <label for=""><a href="/admin/quan-ly-nha-cung-cap">Chọn nhà cung cấp(*):</a></label>
-                            <select  name="id_ncc" class="custom-select">
-                                @each(ncc in dataNCC)
-                            <option value="{{ncc.id}}">{{ncc.tennhacungcap}}</option>
-                                @endeach
-                            </select>
-                        </div>
-                    </div>                    
-                    <div id="addElementSanPham">
-                        {{--  <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="uname">Tên sản phẩm:</label>
-                                            <input type="text" class="form-control" id="tensanpham"  name="tensanpham" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-6 pl-0">
-                                                <div class="form-group">
-                                                    <label for="uname">Giá nhập:(VNĐ)</label>
-                                                    <input type="text" class="form-control" id="gianhap"  name="gianhap" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pl-0">
-                                                <div class="form-group">
-                                                    <label for="uname">Số lượng:</label>
-                                                    <input type="text" class="form-control" id="tensanpham"  name="soluong" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-6 pl-0">
-                                                <div class="form-group">
-                                                    <label for="uname">Loại sản phẩm:</label>
-                                                    <select name="id_lsp" id="selectSm" class="form-control-sm form-control" style="margin-top:3px">
-                                                        
-
-                                                    </select>
-                                                </div> 
-                                            </div>
-                                            <div class="col-md-6 pl-0">
-                                                <div class="form-group">
-                                                    <label for="uname">Khách hàng:</label>
-                                                    <select name="id_lsp" id="selectSm" class="form-control-sm form-control" style="margin-top:3px">
-                                                      
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-6 pl-0">
-                                                <label for="uname">Size:</label>
-                                                    <select name="size" id="selectSm" class="form-control-sm form-control" style="margin-top:3px">
-                                                      <option value="38">38</option>
-                                                      <option value="39">39</option>
-                                                      <option value="40">40</option>
-                                                      <option value="41">41</option>
-                                                      <option value="42">42</option>
-                                                      <option value="43">43</option>
-                                                    </select>
-                                            </div>
-                                            <div class="col-md-6 pl-0" style="padding-top: 40px">
-                                                <div class="form-group">
-                                                    <button onclick="delete(${date.getTime()})" id='btnDelete'><i class="dw dw-delete-3"></i></button>
-                                                  
-                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                                                       
-                        </div>   --}}
-
-                        
-                    </div>
+            <div class="pd-30 card-box mb-10 style=' margin-top: -10px'">
+                <form action="{{route ('page_admin_quan_ly_nhap_hang.store')}}"  name="form-group" method="POST">
+                <div class="row">
                 
-                    </div>
-                        <div class="pd-20 card-box height-100-p mb-10">
-                        <div class="clearfix mb-30">
-                            <div class="pull-left">
-                                <h6 class="text-blue h6">Hóa đơn thanh toán</h6>
-                            </div>
-                        </div>
-                    <div class="row">
-
-                        <div class="col-md-6 col-sm-6">
+                        <div class=" card col-md-8 " style="margin-top:-20px; margin-left: -5px">
                             <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                   <div>
-                                    <label for="">Trạng thái:</label> 
-                                    </div>   
-                                   <div>
-                                    <label for="">Tổng tiền hàng(Vnđ):</label>
-                                    </div>
-                                    <div>
-                                        <label for="">Giảm giá:</label>
-                                    </div> 
-                                    <div>
-                                        <label for="">Cần trả nhà cung cấp:</label>
-                                    </div>    
-                                  
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <div>
-                                        <label for="">Thanh toán</label>
-                                    </div>
-                                    <div>
-                                        <label for="">10.000.000</label>
-                                    </div>
-                                    <div>
-                                        <input name="solo" type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">10.000.000</label>
+                                <div class="clearfix">
+                                    <div class="pull-left">
+                                         <h6 class="text-blue h6" style="margin-left: 5px; margin-top:3px">Chi tiết nhập.</h6>
                                     </div>
                                 </div>
                             </div>
+                        <hr width="100%"/>
+                        <!--////////////////-->
+                            <div id="addElementSanPham">
+
+                            </div>
+                        <!--/////////////////-->
+                            <div class="row">
+                            <div class="col">
+                                <div class="btnthem" style="display: flex;justify-content: center" >
+                                    <button type="button" class="btn btn-primary " id="btnAddSanPham">Thêm</button>
+                             </div>
+                             </div>
+                            </div>
+                            <hr width="100%">
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                                <div>
-                                    <label for="">Ghi chú</label>
+                        <div class=" card col-md-4"  style="margin-top:-20px; margin-left:5px">
+                            <div class="row">
+                                <div class="pull-left">
+                                <h6 class="text-blue h6" style="margin-left: 5px">Thông tin hóa đơn.</h6>
+                            </div>
+                        </div>
+                        <hr width="100%"/>
+                        <div class="row">
+                            
+                                <div class="col-md-6">
+                                    <span>{{admin.email}}</span>
+                                    <hr width="100%" class="m-0">
                                 </div>
-                                <div>
-                                    <input name="vat" type="text">
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-primary">Thanh Toán</button>
+                                <div class="col-md-6">
+                                   <select  id="" class="form-control-sm form-control">
+                                       <option value="1">Thanh toán</option>
+                                       <option value="2">Phiếu nợ</option>
+                                   </select> 
                                 </div>
                         </div>
+                        <div class="row" style="margin-top:8px">
+                          <div class="col-md-4 pr-0">
+                            <span>Ngày nhập:</span>
+                            <hr width="100%" class="m-0">
+                          </div>
+                          <div class="col-md-8 pr-0">
+                            <span ><p>10/11/2021</p></span>
+                          </div>
+                        </div>
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-md-4 pr-0">
+                              <span>Nhà cung cấp:</span>
+                              <hr width="100%" class="m-0">
+                            </div>
+                            <div class="col-md-8 pr-2 mt-2">
+                                <select name="id_ncc" id="" class="form-control-sm form-control">
+                                    @each(ncc in dataNCC)
+                                    <option value="{{ncc.id}}">{{ncc.tennhacungcap}}</option>
+                                    @endeach
+                                </select>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:15px">
+                            <div class="col-md-4 pr-0 mt-2">
+                              <span>Số lô:</span>
+                              <hr width="100%" class="m-0">
+                            </div>
+                            <div class="col-md-8 pr-2">
+                              <input type="text" class="form-control form-control-sm" id="solo" placeholder="Nhập lô sản phẩm." name="solo" required >
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:15px">
+                            <div class="col-md-4 pr-0 mt-2">
+                              <span>Phí VAT(%):</span>
+                              <hr width="100%" class="m-0">
+                            </div>
+                            <div class="col-md-8 pr-2">
+                              <input type="text" class="form-control form-control-sm" id="vat" placeholder="Nhập phí VAT." name="vat" required >
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:15px">
+                            <div class="col-md-4 pr-0 mt-2">
+                              <span>Tiền nợ:</span>
+                              <hr width="100%" class="m-0">
+                            </div>
+                            <div class="col-md-8 pr-2">
+                              <input type="text" class="form-control form-control-sm" id="congno" placeholder="Trả trước." name="congno" >
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:8px">
+                            <div class="col-md-4 pr-0">
+                              <span>Tổng phải trả NCC:</span>
+                              <hr width="100%" class="m-0">
+                            </div>
+                            <div class="col-md-8 pr-0 mt-3">
+                              <span ><p>10.000.000 (vnđ)</p></span>
+                            </div>
+                          </div>
+                          <hr width="100%">
+                          <div class="row">
+                              <div class="col-md-4 mb-4">
+                                  <button type="button" class="btn btn-primary">Lưu</button>
+                              </div>
+                              <div class="col-md-8 mb-4">
+                                <button type="submit" class="btn btn-primary">Thanh toán</button>
+                            </div>
+                          </div>
                     </div>
-                </form>
+               
+                </div>
+            </form>
+
+
             </div>
             <!-- Bootstrap TouchSpin End -->
-
-
-        </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
         </div>
     </div>
 </div>
@@ -219,21 +153,17 @@
 <script>
 
     var btnAdd=document.getElementById('btnAddSanPham');
-    var arrKH ={{{JSON.stringify(dataKhachHang)}}};
-    var arrLSP = {{{JSON.stringify(dataLoaiSP)}}}
+    var arrSP = {{{JSON.stringify(dataSP)}}}
     
     function add(){
-        var optionKH ='';
-        var optionLSP = '';
+        var optionSP = '';
         var date =new Date();
-        arrKH.forEach(element => {
-             optionKH += `<option value="${element.id}">${element.doituong}</option>`
-        });
-        arrLSP.forEach(element => {
-             optionLSP += `<option value="${element.id}">${element.tenloai}</option>`
-        });
+
+        arrSP.forEach(element =>{
+            optionSP += `<option value="${element.tensanpham}">${element.tensanpham}</option>`
+        })
         
-        $('#addElementSanPham').append(`<div class="row" id="${date.getTime()}"><div class="col-md-6"><div class="row"><div class="col-md-6"><div class="form-group"> <label for="uname">Tên sản phẩm:</label> <input type="text" class="form-control" id="tensanpham" name="tensanpham" ></div></div><div class="col-md-6"><div class="row"><div class="col-md-6 pl-0"><div class="form-group"> <label for="uname">Giá nhập:(VNĐ)</label> <input type="text" class="form-control" id="gianhap" name="gianhap" ></div></div><div class="col-md-6 pl-0"><div class="form-group"> <label for="uname">Số lượng:</label> <input type="text" class="form-control" id="tensanpham" name="soluong" ></div></div></div></div></div></div><div class="col-md-6"><div class="row"><div class="col-md-6"><div class="row"><div class="col-md-6 pl-0"><div class="form-group"> <label for="uname">Loại sản phẩm:</label> <select name="id_lsp" id="selectSm" class="form-control-sm form-control" style="margin-top:3px"> ${optionLSP} </select></div></div><div class="col-md-6 pl-0"><div class="form-group"> <label for="uname">Khách hàng:</label> <select name="id_lsp" id="selectSm" class="form-control-sm form-control" style="margin-top:3px"> ${optionKH} </select></div></div></div></div><div class="col-md-6"><div class="row"><div class="col-md-6 pl-0"> <label for="uname">Size:</label> <select name="size" id="selectSm" class="form-control-sm form-control" style="margin-top:3px"><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option> </select></div><div class="col-md-6 pl-0" style="padding-top: 40px"><div class="form-group"> <button onclick="deleteItem(${date.getTime()})" id='btnDelete'><i class="dw dw-delete-3"></i></button></div></div></div></div></div></div></div>`)
+        $('#addElementSanPham').append(`<div class="row" id="${date.getTime()}"><div class="col-md-12" style="margin-top:3px;"><div class="card pl-3"><div class="row"><div class="col-md-6"><div class="row"><div class="col-md-8 pl-2" style="padding-right:0px"><div class="form-group"> <label for="uname">Tên sản phẩm:</label> <select name="tensanpham" id="tensanpham" class="form-control-sm form-control" style="margin-top:3px">${optionSP}</select></div></div><div class="col-md-4 pr-2 "><div class="form-group"> <label for="uname">Số lượng:</label> <input type="text" class="form-control" id="soluong" name="soluong" ></div></div></div></div><div class="col-md-6"><div class="row"><div class="col-md-8 pl-2" style="padding-right:0px"><div class="row"><div class="col-md-8 pl-2 pr-2"><div class="form-group"> <label for="uname">Giá nhập:(VNĐ)</label> <input type="text" class="form-control" id="gianhap" name="gianhap" ></div></div><div class="col-md-4 pl-2 pr-2"><div class="form-group"> <label for="uname">Size:</label> <select name="size" id="size" class="form-control-sm form-control" style="margin-top:3px"><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option> </select></div></div></div></div><div class="col-md-4 pr-2 " style="padding-top:38px"><div class="form-group"> <button onclick="deleteItem(${date.getTime()})" id='btnDelete'><i class="dw dw-delete-3"></i></button></div></div></div></div></div></div></div></div>`)
     }
     btnAdd.addEventListener('click',()=>{
        add();

@@ -27,10 +27,7 @@ export default class Chitiethoadon extends BaseModel {
   public thanhtien: number
 
   @column()
-  public ghichu: string
-
-  @column()
-  public danhgia: string
+  public giamgia: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

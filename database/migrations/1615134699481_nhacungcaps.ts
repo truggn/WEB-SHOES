@@ -10,7 +10,7 @@ export default class Nhacungcaps extends BaseSchema {
         table.string('diachi', 255).notNullable(),
         table.string('phone', 15).notNullable(),
         table.string('email', 255).notNullable()
-      table.boolean('trangthai').defaultTo(1)
+      table.boolean('trangthai').defaultTo(1)// 1: kinh doanh , 0: ko  kinh doanh
       table.timestamps(true)
     })
   }

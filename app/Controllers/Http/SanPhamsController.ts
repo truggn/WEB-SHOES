@@ -11,31 +11,22 @@ export default class SanPhamsController {
     const limit = 5
     const dataLoaiSP = await Loaisanpham.all()
 
-    const datasanpham = await SanPham.query().select('*').from('sanphams')
+    const kinhDoanh = await SanPham.query().select('*').from('sanphams').where({ trangthai: 1 })
+      .preload('khachhang').preload('loaisanpham').paginate(page, limit)
+    const ko_kinhDoanh = await SanPham.query().select('*').from('sanphams').where({ trangthai: 0 })
       .preload('khachhang').preload('loaisanpham').paginate(page, limit)
     const dataDT = await Doituong.all()
-    return view.render('admin/danhSachSanPham', { datasanpham, dataLoaiSP, dataDT })
+    return view.render('admin/danhSachSanPham', { kinhDoanh, ko_kinhDoanh, dataLoaiSP, dataDT })
   }
 
   public async create({ }: HttpContextContract) {
   }
 
+  // SAN PHAM O TRANG THAI NHAP HANG
   public async store({ response, request, session }: HttpContextContract) {
     try {
-      const hinhanh = request.file('hinhanh', {
-        size: '1mb',
-        extnames: ['jpg, png, jpeg']
-      })
-      const name = `${new Date().getTime()}.${hinhanh?.extname}`
-      if (!hinhanh) {
-        return 'Please upload file'
-      }
-      await hinhanh.move(Application.publicPath('uploads'), {
-        name: name,
-      })
-
-      const data = request.only(['tensanpham', 'hinhanh', 'size', 'giaban', 'color', 'mota', 'id_lsp', 'id_doituong'])
-      data.hinhanh = name
+      const data = request.only(['tensanpham', 'size', 'color', 'mota', 'id_lsp', 'id_doituong'])
+      //data.hinhanh = name
       const sanpham = await Sanpham.create(data);
       const loaisp = await Loaisanpham.find('id_lsp', data.id_lsp)
 
@@ -58,10 +49,10 @@ export default class SanPhamsController {
   }
 
   // POST CHUYEN TRANG THAI NGUNG KINH DOANH
-  public async deleteSanPham({ view, response, request, params }: HttpContextContract) {
+  public async deleteSanPham({ response, params }: HttpContextContract) {
     try {
       const id = params.id
-      await Sanpham.query().where('id', id).update({ trangthai: 0 }) // chuyển trạng thái về 0 , mặc định là 1
+      await Sanpham.query().where('id', id).update({ trangthai: 0 }) // chuyển trạng thái về 0 
       return response.redirect('back')
     } catch (error) {
       return response.json('that bai')
@@ -69,7 +60,7 @@ export default class SanPhamsController {
   };
 
   // POST CHUYEN TRANG THAI KINH DOANH TRO LAI
-  public async revertSanPham({ view, response, request, params }: HttpContextContract) {
+  public async kinhDoanhSanPham({ response, params }: HttpContextContract) {
     try {
       const id = params.id
       await Sanpham.query().where('id', id).update({ trangthai: 1 }) // chuyển trạng thái về 1,
@@ -79,7 +70,7 @@ export default class SanPhamsController {
     }
   }
   // UPDATE SAN PHAM
-  public async updateSanPham({ view, response, request, params }: HttpContextContract) {
+  public async updateSanPham({ response, request, params }: HttpContextContract) {
     try {
       const hinhanh = request.file('hinhanh');
       const name = `${new Date().getTime()}.${hinhanh?.extname}`
@@ -124,7 +115,7 @@ export default class SanPhamsController {
     }
   }
   // HET KHUYEN MAI 
-  public async hetKhuyenMai({ view, response, request, params }: HttpContextContract) {
+  public async hetKhuyenMai({ request, params }: HttpContextContract) {
     try {
       const id = params.id
       const khuyenmai = request.input('khuyenmai')
@@ -132,6 +123,40 @@ export default class SanPhamsController {
 
     } catch (error) {
 
+    }
+  };
+  // POST THUC HIEN KINH DOANH SAN PHAM 
+  public async kinhDoanh({ response, request, params }: HttpContextContract) {
+    const id = params.id
+    const data = request.only(['tensanpham', 'hinhanh', 'size', 'giaban', 'color', 'mota', 'id_lsp', 'id_doituong'])
+    try {
+      const hinhanh = request.file('hinhanh');
+      const name = `${new Date().getTime()}.${hinhanh?.extname}`
+      if (!hinhanh) {
+        return 'Please upload file'
+      }
+      await hinhanh.move(Application.publicPath('uploads'), {
+        name: name,
+      });
+      data.hinhanh = name
+      await Sanpham.query().where('id', id)
+        .update({
+          tensanPham: data.tensanpham,
+          size: data.size,
+          giaban: data.giaban,
+          color: data.color,
+          mota: data.mota,
+          hinhanh: name,
+          trangthai: 1,
+          id_doituong: data.id_doituong,
+          id_lsp: data.id_lsp
+        })
+      return response.redirect('back')
+    } catch (error) {
+      return response.json({
+        message: 'Cập nhật thất bại',
+        error
+      })
     }
   }
 

@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Phieunhap from './Phieunhap'
+import Sanpham from './Sanpham'
 
 
 export default class Chitietphieunhap extends BaseModel {
@@ -12,6 +13,12 @@ export default class Chitietphieunhap extends BaseModel {
 
   @belongsTo(() => Phieunhap)
   public phieunhap: BelongsTo<typeof Phieunhap>
+
+  @column({ columnName: 'id_sp' })
+  public sanphamId: number
+
+  @belongsTo(() => Sanpham)
+  public sanpham: BelongsTo<typeof Sanpham>
 
   @column()
   public tensanpham: string

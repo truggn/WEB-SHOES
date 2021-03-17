@@ -62,7 +62,45 @@
                     </div>
                 </div>
                 <!--//////////////////////////////////////////END MODAL //////////////////////-->
+                <!--/////////////////////////////////// MODAL VIEW CHI TIET PHIEU NHAP /////////////////////-->
+               @each(pn in dataPN)
 
+                <div class="modal fade bs-example-modal-lg" id="idx{{pn.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">Thông tin phiếu nhập</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                      <tr>
+                                          <th>Id</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Loại</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá nhập</th>
+                                        <th>Size</th>
+                                        <th>Đơn vị tính</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                      <tr>
+                                        <td>john@example.com</td>
+                                        <td>john@example.com</td>
+                                        <td>john@example.com</td>
+                                      </tr>
+                                      
+                                    </tbody>
+                                  </table>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                @endeach
                 <table class="table">
                     <thead>
                         <tr>
@@ -101,7 +139,8 @@
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                         <i class="dw dw-more"></i>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">     
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">    
+                                        <a class="dropdown-item" data-toggle="modal" data-id="{{pn.id}}" data-target="#idx{{pn.id}}" href="#"><i class="dw dw-eye"></i>Xem</a> 
                                         <a class="dropdown-item" data-toggle="modal" data-id="{{pn.id}}" data-target="#id{{pn.id}}" href="#"><i class="dw dw-edit2"></i> Edit</a>
                                         <a class="dropdown-item" data-toggle="modal" data-id="{{pn.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
                                     </div>

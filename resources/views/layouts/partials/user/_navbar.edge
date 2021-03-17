@@ -1,59 +1,36 @@
-<!----container---->
-<div class="container">
-  <!----top-header---->
-  <div class="top-header">
-    <div class="logo">
-      <a href="/trang-chu"><img src="../images/logo.png" title="Trang chủ" /></a>
-    </div>
-    <div class="top-header-info">
-      <div class="top-contact-info">
-        <ul class="unstyled-list list-inline">
-          <li><span class="phone"> </span>090 - 223 44 66</li>
-          <li><span class="mail"> </span><a href="#">help@trendd.com</a></li>
-          <div class="clearfix"> </div>
-        </ul>
-      </div>
-      <div class="cart-details">
-        <div class="add-to-cart">
-          <a href="/cart" id="cart">
-            <ul class="unstyled-list list-inline">
-              <li><span class="cart"> </span>
-                <ul class="cart-sub">
-                  <li><p>0 Products</p></li>
-                </ul>
-              </li>
-            </ul>
-          </a>
+      <!-- navbar-->
+      <header class="header bg-white">
+        <div class="container px-0 px-lg-3">
+          <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Boutique</span></a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                  <!-- Link--><a class="nav-link " href="/trang-chu">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                  <!-- Link--><a class="nav-link" href="/san-pham">Cửa hàng</a>
+                </li>
+                <li class="nav-item">
+                  <!-- Link--><a class="nav-link" href="#">Dịch vụ</a>
+                </li>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                  <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a class="dropdown-item border-0 transition-link" href="shop.html">Category</a><a class="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a class="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
+                </li>
+              </ul>
+              <ul class="navbar-nav ml-auto">               
+                <li class="nav-item"><a class="nav-link" href="/gio-hang"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Giỏ hàng<small class="text-gray">(2)</small></a></li>
+                <li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>
+                <li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-user-alt mr-1 text-gray"></i>Đăng nhập</a></li>
+              </ul>
+            </div>
+          </nav>
         </div>
-        <div class="clearfix"> </div>
-      </div>
-    </div>
-    <div class="clearfix"> </div>
-  </div>
-  <!----//top-header---->
-  <!---top-header-nav---->
-  <div class="top-header-nav"> 
-  <!----start-top-nav---->
-   <nav class="top-nav main-menu">
-      <ul class="top-nav">
-        <li><a href="/san-pham" title="Sản Phẩm">PRODUCTS </a><span> </span></li>
-        <li><a href="products.html">CAMPAINGS</a><span> </span></li>
-        <li><a href="products.html">SERVICES</a><span> </span></li>
-        <li><a href="products.html">BRANDS</a><span> </span></li>
-        <li><a href="products.html">ABOUT US</a></li>
-        <div class="clearfix"> </div>
-      </ul>
-      <a href="#" id="pull"><img src="images/nav-icon.png" title="menu" /></a>
-    </nav>
-    <!----End-top-nav---->
-    <!---top-header-search-box--->
-    <div class="top-header-search-box">
-      <form>
-        <input type="text" placeholder="Search" required / maxlength="22">
-        <input type="submit" value=" " >
-      </form>
-    </div>
-    <!---top-header-search-box--->
-        <div class="clearfix"> </div>
-  </div>
-</div>
+      </header>
+      <script type="text/javascript">
+       document.addEventListener('DOMContentLoaded', function(e){
+            $(document).on('click', 'ul li a', function(){
+            $(this).addClass('active').siblings().removeClass('active')
+          })
+       })
+    </script>
