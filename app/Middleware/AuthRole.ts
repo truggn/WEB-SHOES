@@ -6,7 +6,7 @@ export default class AuthRole {
     args: any) {
     const role = auth.user?.role
     if (args != role) {
-      return response.redirect('admin/login')
+      return response.redirect('/login')
     }
     await next()
   }

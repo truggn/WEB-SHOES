@@ -43,13 +43,13 @@ Route.group(() => {
     Route.get('/trang-chu', 'homeController.index')
     Route.get('/gio-hang', 'billsController.viewHoaDon')
     Route.post('/gio-hang/addtocart', 'billsController.addToCart')
+    Route.post('/gio-hang/add_cart_ajax', 'billsController.add_cart_ajax')
     Route.get('/gio-hang/checkout', 'billsController.checkout')
 })
 
 // ROUTER PRODUCT
 Route.group(() => {
     Route.get('/san-pham', 'productsController.viewSanPham')
-    Route.get('/san-pham/:id', 'productsController.viewDetail')
 
 })
 
@@ -63,10 +63,13 @@ Route.group(() => {
 
 
 })
-// ROTER GIO HANG
+
 
 
 Route.group(() => {
+
+    Route.get('/page-admin', 'AdminsController.viewAdmin_Manager')
+
     // ROUTER LOAI SAN PHAM
     Route.resource('page-admin/loai-san-pham', 'LoaiSanPhamsController')
 
@@ -89,8 +92,6 @@ Route.group(() => {
     Route.resource('page-admin/quan-ly-kho', 'QuanlykhosContronller')
 
     // ROUTER ADMIN
-    Route.resource('page-admin', 'PageadminsController')
-
     // LOAI SAN PHAM
     Route.post('page-admin/loai-san-pham/deletelsp/:id', 'LoaiSanPhamsController.deleteLoaiSanPham')
 

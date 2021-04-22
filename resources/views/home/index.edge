@@ -4,7 +4,6 @@
 
 	  <!--  Modal -->
       @each(sp in datasanpham)
-        
       <div class="modal fade" id="ids{{sp.id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -109,7 +108,7 @@
         <section class="py-5">
           <header>
             <p class="small text-muted small text-uppercase mb-1">Xứng tầm phong cách</p>
-            <h2 class="h5 text-uppercase mb-4">Sản phẩm nổi bật</h2>
+            <h2 class="h5 text-uppercase mb-4">Sản phẩm mới nhất</h2>
           </header>
           <div class="row">
             <!-- PRODUCT-->
@@ -159,6 +158,20 @@
           </div>
         </section>
       </div>
+
+      <script>
+            $(document).ready(function() {
+        var autoplaySlider = $('#autoplay').lightSlider({
+            auto:true,
+            loop:true,
+            pauseOnHover: true,
+            onBeforeSlide: function (el) {
+                $('#current').text(el.getCurrentSlideCount());
+            } 
+        });
+        $('#total').text(autoplaySlider.getTotalSlideCount());
+    });
+      </script>
 
 @endsection
 

@@ -7,7 +7,7 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator'
 export default class HomeController {
     public async index({ view, request, response }: HttpContextContract) {
         const page = request.input('page', 1)
-        const limit = 8
+        const limit = 4
         const datasanpham = await SanPham.query().select('*').from('sanphams').where({ trangthai: 1 }).preload('loaisanpham').paginate(page, limit)
         return view.render('home/index', { datasanpham })
     }

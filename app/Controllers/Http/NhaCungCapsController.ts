@@ -1,13 +1,15 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Nhacungcap from 'App/Models/Nhacungcap'
+import Loaisanpham from 'App/Models/Loaisanpham'
 
 
 export default class NhaCungCapsController {
 
   // VIEW INDEX
   public async index({ view }: HttpContextContract) {
+    const loaiSP = await Loaisanpham.all()
     const dataNCC = await Nhacungcap.query().select('*').from('nhacungcaps')
-    return view.render('admin/nhaCungCap', { dataNCC })
+    return view.render('admin/nhaCungCap', { dataNCC, loaiSP })
   };
 
   // THÊM NHÀ CUNG CẤP

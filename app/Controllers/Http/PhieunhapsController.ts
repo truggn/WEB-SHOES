@@ -10,21 +10,22 @@ import Sanpham from 'App/Models/Sanpham'
 
 export default class PhieunhapsController {
   public async index({ view }: HttpContextContract) {
+    const loaiSP = await Loaisanpham.all()
     const dataPN = await Phieunhap.query().select('*').from('phieunhaps').preload('nhacungcap')
     const dataCTPN = await Chitietphieunhap.query().select('*').from('chitietphieunhaps').preload('phieunhap').preload('sanpham')
-    return view.render('admin/nhapHang', { dataPN, dataCTPN })
+    return view.render('admin/nhapHang', { dataPN, dataCTPN, loaiSP })
   }
 
   public async create({ view, auth }: HttpContextContract) {
 
-    const dataLoaiSP = await Loaisanpham.all()
+    const loaiSP = await Loaisanpham.all()
     const dataKhachHang = await Khachhang.all()
     const dataSP = await Sanpham.all()
     const dataNCC = await Nhacungcap.all()
     const admin = auth.user;
 
 
-    return view.render('admin/danhMucNhapHang', { dataKhachHang, dataLoaiSP, dataNCC, dataSP, admin, })
+    return view.render('admin/danhMucNhapHang', { dataKhachHang, loaiSP, dataNCC, dataSP, admin, })
   }
 
 

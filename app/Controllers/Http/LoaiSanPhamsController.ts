@@ -5,8 +5,9 @@ export default class LoaiSanPhamsController {
 
   // VIEW INDEX
   public async index({ view }: HttpContextContract) {
+    const loaiSP = await Loaisanpham.all()
     const dataLSP = await Loaisanpham.query().select('*').from('loaisanphams')
-    return view.render('admin/danhMucLoaiSP', { dataLSP })
+    return view.render('admin/danhMucLoaiSP', { dataLSP, loaiSP })
   };
 
   // THÊM LOẠI 

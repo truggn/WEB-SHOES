@@ -7,7 +7,7 @@ import Application from '@ioc:Adonis/Core/Application'
 
 export default class ProductsController {
 
-    public async viewSanPham({ response, view, request }: HttpContextContract) {
+    public async viewSanPham({ view, request }: HttpContextContract) {
         const idkh = request.input('idkh')
         const idlsp = request.input('idlsp')
         const doituong = await Khachhang.all()
@@ -15,15 +15,15 @@ export default class ProductsController {
         if (idlsp) {
             const dataSP = await Sanpham.query().select('*').from('sanphams').where({ 'id_lsp': idlsp, trangthai: 1 }).preload('loaisanpham')
             return view.render('home/shop', { doituong, loaiSP, dataSP })
-            // return response.json(dataSP)
+
         } else if (idkh) {
             const dataSP = await Sanpham.query().select('*').from('sanphams').where({ 'id_doituong': idkh, trangthai: 1 }).preload('khachhang')
             return view.render('home/shop', { doituong, loaiSP, dataSP })
-            // return response.json(dataSP)
+
         } else {
             const dataSP = await Sanpham.query().select('*').from('sanphams').where({ trangthai: 1 })
             return view.render('home/shop', { doituong, loaiSP, dataSP })
-            //return response.json(dataSP)
+
         }
 
     }

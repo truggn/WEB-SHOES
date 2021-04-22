@@ -1,27 +1,34 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import SanPham from 'App/Models/Sanpham'
 import Loaisanpham from 'App//Models/Loaisanpham'
-import Doituong from 'App/Models/Khachhang'
+import Khachhang from 'App/Models/Khachhang'
 import Sanpham from 'App/Models/Sanpham'
 import Application from '@ioc:Adonis/Core/Application'
 
+
 export default class SanPhamsController {
+
+
   public async index({ view, request }: HttpContextContract) {
-    const page = request.input('page', 1)
-    const limit = 5
-    const dataLoaiSP = await Loaisanpham.all()
+    const idkh = request.input('idkh')
+    const idlsp = request.input('idlsp')
+    const doituong = await Khachhang.all()
+    const loaiSP = await Loaisanpham.all()
+    if (idlsp) {
+      const dataSP = await Sanpham.query().select('*').from('sanphams').where({ 'id_lsp': idlsp, trangthai: 1 }).preload('loaisanpham')
+      return view.render('admin/page-sanpham', { doituong, loaiSP, dataSP })
 
-    const kinhDoanh = await SanPham.query().select('*').from('sanphams').where({ trangthai: 1 })
-      .preload('khachhang').preload('loaisanpham').paginate(page, limit)
-    const ko_kinhDoanh = await SanPham.query().select('*').from('sanphams').where({ trangthai: 0 })
-      .preload('khachhang').preload('loaisanpham').paginate(page, limit)
-    const dataDT = await Doituong.all()
-    return view.render('admin/danhSachSanPham', { kinhDoanh, ko_kinhDoanh, dataLoaiSP, dataDT })
+    } else if (idkh) {
+      const dataSP = await Sanpham.query().select('*').from('sanphams').where({ 'id_doituong': idkh, trangthai: 1 }).preload('khachhang')
+      return view.render('admin/page-sanpham', { doituong, loaiSP, dataSP })
+
+    } else {
+      const dataSP = await Sanpham.query().select('*').from('sanphams').where({ trangthai: 1 }).preload('loaisanpham').preload('khachhang')
+      return view.render('admin/page-sanpham', { doituong, loaiSP, dataSP })
+
+    }
+
   }
-
-  public async create({ }: HttpContextContract) {
-  }
-
   // SAN PHAM O TRANG THAI NHAP HANG
   public async store({ response, request, session }: HttpContextContract) {
     try {
@@ -30,7 +37,8 @@ export default class SanPhamsController {
       const sanpham = await Sanpham.create(data);
       const loaisp = await Loaisanpham.find('id_lsp', data.id_lsp)
 
-      const doituong = await Doituong.find('id_doituong', data.id_doituong)
+      const doituong = await Khachhang.find('id_doituong', data.id_doituong)
+      const loaiSP = await Loaisanpham.all()
 
       if (loaisp == null || doituong == null) {
         return response.redirect('back')
@@ -94,6 +102,7 @@ export default class SanPhamsController {
           id_doituong: data.id_doituong,
           id_lsp: data.id_lsp
         })
+      console.log(data.giaban)
       return response.redirect('back')
     } catch (error) {
       return response.json({
@@ -115,14 +124,13 @@ export default class SanPhamsController {
     }
   }
   // HET KHUYEN MAI 
-  public async hetKhuyenMai({ request, params }: HttpContextContract) {
+  public async hetKhuyenMai({ response, params }: HttpContextContract) {
     try {
       const id = params.id
-      const khuyenmai = request.input('khuyenmai')
-      await Sanpham.query().where('id', id).update({ khuyenmai, trangthaikhuyenmai: 0 }) // chuyển trạng thái về 0,
-
+      await Sanpham.query().where('id', id).update({ trangthaikhuyenmai: 0 }) // chuyển trạng thái về 0,
+      return response.redirect('back')
     } catch (error) {
-
+      return response.json('error')
     }
   };
   // POST THUC HIEN KINH DOANH SAN PHAM 
@@ -154,7 +162,7 @@ export default class SanPhamsController {
       return response.redirect('back')
     } catch (error) {
       return response.json({
-        message: 'Cập nhật thất bại',
+        message: 'Cập nhật thất bại.',
         error
       })
     }

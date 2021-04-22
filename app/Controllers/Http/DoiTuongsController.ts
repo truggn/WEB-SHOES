@@ -1,13 +1,15 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Doituong from 'App/Models/Khachhang'
+import Loaisanpham from 'App//Models/Loaisanpham'
 
 export default class DoiTuongsController {
 
   // VIEW INDEX
   public async index({ view, response }: HttpContextContract) {
     try {
+      const loaiSP = await Loaisanpham.all()
       const dataDT = await Doituong.query().select('*').from('khachhangs')
-      return view.render('admin/danhMucDoiTuong', { dataDT })
+      return view.render('admin/danhMucDoiTuong', { dataDT, loaiSP })
     } catch (error) {
       return response.json(error)
     }

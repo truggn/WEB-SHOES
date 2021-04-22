@@ -218,7 +218,16 @@
                         <span class="micon dw dw-house-1"></span><span class="mtext">Hệ thống</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route ('page_admin_san_pham.index')}}">Quản lý sản phẩm</a></li>
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle">
+                                <span class="micon dw dw-list3"></span><span class="mtext">Quản lý sản phẩm</span>
+                            </a>
+                            <ul class="submenu">
+                                @each(lsp in loaiSP)
+                                <li><a href="/page-admin/san-pham?idlsp={{ lsp.id }}" value ={{lsp.id}}>{{lsp.tenloai}}</a></li>
+                                @endeach
+                            </ul>
+                        </li>
                         <li><a href="/page-admin/hoa-don">Quản lý hóa đơn</a></li>
                         <li><a href="{{route ('page_admin_quan_ly_nha_cung_cap.index')}}">Quản lý nhà cung ứng</a></li>
                         <li><a href="{{route ('page_admin_quan_ly_nhap_hang.index')}}">Quản lý nhập hàng</a></li>
@@ -231,6 +240,7 @@
                         <span class="micon dw dw-library"></span><span class="mtext">Danh mục</span>
                     </a>
                     <ul class="submenu">
+                        <li><a href="{{route ('page_admin_khach_hang.index')}}">Thêm sản phẩm</a></li>
                         <li><a href="{{route ('page_admin_loai_san_pham.index')}}">Loại sản phẩm</a></li>
                         <li><a href="{{route ('page_admin_khach_hang.index')}}">Đối tượng</a></li>
                     </ul>

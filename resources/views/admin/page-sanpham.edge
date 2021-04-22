@@ -78,17 +78,8 @@
 
         <div class="card-box mb-10">
             <div class="clearfix mb-5">
-                <div class="pull-left">
-                    <h5 class="h5 pd-10">sản phẩm đang kinh doanh</h5>
-                    <div class="h6 ml-3">Lọc theo:
-                        <select name="" id="">
-                            <option value="0">Tất cả</option>
-                            @each(lsp in dataLoaiSP)
-                           <a href="#"><option  value="{{lsp.id}}">{{lsp.tenloai}}</option></a> 
-                            @endeach
-                            
-                        </select>
-                    </div>
+                <div class="pull-left">            
+                    <h5 class="h5 pd-10">Bảng sản phẩm.</h5>
                 </div>
             </div>
             
@@ -212,10 +203,23 @@
                     </div>
                 </div>
             </div>
+             <!--Modal HUY Khuyen mai-->
+            <div class="modal fade" id="huykm-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content bg-warning">
+                        <div class="modal-body text-center">
+                            <h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Warning</h3>
+                            <p>Bạn có muốn hủy khuyến mãi với sản phẩm này?</p>
+                            <button type="submit" class="btn btn-dark" id="btnHuyKm">Ok</button>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <!--Modal KHUYEN MAI-->
                 @each(sanpham in kinhDoanh)
                 <div class="modal" id="idd{{sanpham.id}}" >
-                    <form action="" method="POST" name="form-khuyenmai">
+                    <form action="/page-admin/san-pham/khuyenmai/{{sanpham.id}}?_method=PUT" method="POST" name="form-khuyenmai">
                         <div class="modal-dialog">
                             <div class="modal-content">
                         
@@ -232,12 +236,6 @@
                                             <div class="col-sm-6">
                                                 <label for="khuyenmai">Phần trăm:</label>  
                                             </div>
-                                            <div class="col-sm-6 ">
-                                                <label class="switch float-right">
-                                                    <input type="checkbox" id="togBtn">
-                                                    <div class=" slider round "></div>
-                                                    </label>
-                                            </div>
                                         </div>
                                       <input type="text" class=" form-control " id="phantram" placeholder="Nhập phần trăm vào"  name="khuyenmai" required>
                                   </div>
@@ -246,7 +244,7 @@
                               <!-- Modal footer -->
                               <div class="modal-footer">
                                 
-                                <button type="button" class="btn btn-success" id="btnOKKhuyenMai">Xác nhận</button>
+                                <button type="submit" class="btn btn-success" id="btnOKKhuyenMai">Xác nhận</button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                               </div>
                         
@@ -273,7 +271,7 @@
                 </thead>
                 <tbody>
 
-                    @each(sanpham in kinhDoanh) 
+                    @each(sanpham in dataSP) 
                     <tr>
                         <td class="table-plus">
                             <img src="../uploads/{{sanpham.hinhanh}}" width="70" height="70" alt="{{sanpham.tensanpham}}">
@@ -281,12 +279,17 @@
                         <td>
                             <h5 class="font-16">{{sanpham.tensanpham}}</h5>
                             {{sanpham.loaisanpham.tenloai}}
-                           [{{sanpham.khachhang.doituong}}]
                         </td>
                         <td>{{sanpham.color}}</td>
                         <td>{{sanpham.size}}</td>
                         <td>${{sanpham.giaban}}</td>
-                        <td>{{sanpham.khuyenmai}}</td>
+
+                        <td>
+                            @if(sanpham.trangthaikhuyenmai == 1)
+                            <p>{{sanpham.khuyenmai}} %</p>
+                            @endif
+
+                        </td>
                         <td>
                             @if(sanpham.trangthai ==1)
                               <p>kinh doanh</p>
@@ -301,7 +304,11 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                     <a class="dropdown-item" id="viewsanpham" href="#"><i class="dw dw-eye"></i>Xem </a>
                                     <a class="dropdown-item" id="editsanpham" data-toggle="modal" data-id="{{sanpham.id}}" data-target="#id{{sanpham.id}}" href="#"><i class="dw dw-edit2"></i>Cập nhật</a>
+                                    @if(sanpham.trangthaikhuyenmai == 1)
+                                    <a class="dropdown-item" data-toggle="modal" data-id="{{sanpham.id}}" data-target="#huykm-modal" href="#"><i class="dw dw-edit2"></i>Hủy khuyễn mãi</a>
+                                    @elseif(sanpham.trangthaikhuyenmai == 0)
                                     <a class="dropdown-item" id="editkhuyenmai" data-toggle="modal" data-idd="{{sanpham.id}}" data-target="#idd{{sanpham.id}}" href="#"><i class="dw dw-edit2"></i>Khuyễn mãi</a>
+                                    @endif
                                     <a class="dropdown-item"  data-toggle="modal" data-id="{{sanpham.id}}" data-target="#warning-modal" href="#"><i class="dw dw-delete-3"></i>Ngừng kinh doanh</a>
                                 </div>
                             </div>
@@ -311,7 +318,21 @@
                     @endeach
                 </tbody>
             </table>
+            
         </div>
+          <!-- PAGINATION-->
+                    
+         <div class="mb-2" style="display: flex;justify-content: center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center justify-content-lg-end">
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                </ul>
+              </nav>
+         </div>
         <!--////////////////////////////// NGUNG KINH DOANH ///////////////////////////////////////////////-->
 
         <div class="card-box mb-10">
@@ -551,7 +572,7 @@
                         </td>
                         <td>{{sp.loaisanpham.tenloai}}</td>
                         <td>{{sp.color}}</td>
-                        <td>${{sp.size}}</td>
+                        <td>{{sp.size}}</td>
                         <td>
                             @if(sp.trangthai == 0)
                               <p>chờ</p>
@@ -589,25 +610,31 @@
 <div>
     <form name="revert-product-from" method="POST"></form>
 </div>
+<div>
+    <form name="huy-khuyen-mai-form" method="POST"></form>
+</div>
 
 <script>
         document.addEventListener('DOMContentLoaded', function(){
-        var idsp;
-        var btnXoa = document.getElementById('btnOk')  
-        var btnRevert = document.getElementById('btnRevert')    
-        var btnKhuyenMai = document.getElementById('btnOKKhuyenMai')  
-        var formKhuyenMai = document.forms['form-khuyenmai']   
-        var formXoa = document.forms['delete-product-form']
-        var formRevertSP = document.forms['revert-product-from']
-        var inputKhuyenMai = document.getElementById('phantram')
-        var chooseEdit = document.getElementById('editsanpham')
-        var chooseKhuyenMai = document.getElementById('editkhuyenmai')
-        var on_off = document.getElementById('togBtn')
+            var idsp;
+            var btnXoa = document.getElementById('btnOk')  
+            var btnRevert = document.getElementById('btnRevert')   
+            var btnHuyKm = document.getElementById('btnHuyKm')  
+            var btnKhuyenMai = document.getElementById('btnOKKhuyenMai')  
+            var formKhuyenMai = document.forms['form-khuyenmai']   
+            var formXoa = document.forms['delete-product-form']
+            var formRevertSP = document.forms['revert-product-from']
+            var formHuyKM = document.forms['huy-khuyen-mai-form']
+            var inputKhuyenMai = document.getElementById('phantram')
+            var chooseEdit = document.getElementById('editsanpham')
+            var chooseKhuyenMai = document.getElementById('editkhuyenmai')
+            var on_off = document.getElementById('togBtn')
 
-        // DELETE SẢN PHẨM
+            // DELETE SẢN PHẨM
             $('#warning-modal').on('show.bs.modal', function(event){
                 var button =  $(event.relatedTarget);
                 idsp = button.data('id'); 
+                console.log(idsp)
             })
             btnXoa.onclick = () =>{                       
                 formXoa.action='/page-admin/san-pham/deletesp/'+ idsp +'?_method=PUT'          
@@ -624,31 +651,16 @@
                 formRevertSP.submit()
             };
 
-        // CẬP NHẬT KHUYỄN MÃI
-        $('#khuyenmai-modal').on('show.bs.modal', function(event){
+             // HUY KHUYEN MAI SẢN PHẨM
+             $('#huykm-modal').on('show.bs.modal', function(event){
                 var button =  $(event.relatedTarget);
                 idsp = button.data('id');
-                console.log(idsp, 'id khuyen mai')
-                
             })
-            btnKhuyenMai.onclick = () =>{
-                formKhuyenMai.action='/page-admin/san-pham/khuyenmai/'+idsp+'?_method=PUT'
-                formKhuyenMai.submit()
-            };
-
-
-        // XỬ LÝ CHECKBOX KHUYẾN MÃI
-        $("#togBtn").on('change', function() {
-        if ($(this).is(':checked')) {
-            $(this).attr('value', 'true');
-            $('#phantram').removeAttr('disabled');
-        }
-        else {
-           $(this).attr('value', 'false');
-           $('#phantram').attr('disabled', 'disabled')
-        }
+            btnHuyKm.onclick = () =>{                       
+                formHuyKM.action='/page-admin/san-pham/hetkhuyenmai/'+ idsp +'?_method=PUT'          
+                formHuyKM.submit()
+        };
         });
-    });
 
 </script> 
 
